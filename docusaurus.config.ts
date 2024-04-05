@@ -62,9 +62,9 @@ const config: Config = {
         },*/
       ],
     },
-    footer: {
+    /*footer: {
       copyright: `2022 - ${new Date().getFullYear()} planetearth.kr`,
-    },
+    },*/
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
