@@ -3,7 +3,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 const config: Config = {
   title: 'PlanetEarth',
   tagline: '마인크래프트 오픈월드 지구서버',
-  url: 'https://planetearth.kr/',
+  url: 'https://docs.planetearth.kr/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
