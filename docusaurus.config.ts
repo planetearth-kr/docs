@@ -64,9 +64,9 @@ const config: Config = {
       copyright: `2022 - ${new Date().getFullYear()} planetearth.kr`,
     },*/
     algolia: {
-      appId: 'JBGJNIAKWU',
-      apiKey: 'aa67a7f69b5d33ce71b27d65eb937130',
-      indexName: 'planetearth_docs',
+      appId: 'K7LZJ1O8AW',
+      apiKey: 'a3cec996f9bf8146ef99af8fedd6b2a2',
+      indexName: 'planetearth',
       contextualSearch: true,
       externalUrlRegex: 'external\\.com|domain\\.com',
       replaceSearchResultPathname: {
