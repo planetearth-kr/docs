@@ -53,7 +53,7 @@ async def on_message(message):
     author_id = message.author.id
 
     # 디스코드 API
-    discord_url = (f"https://planetearth.kr/api/discord/key={API_KEY}&discord={author_id}")
+    discord_url = f"https://planetearth.kr/api/discord/key={API_KEY}&discord={author_id}"
     discord_request = requests.get(discord_url)
     discord_json = discord_request.json()
 
@@ -66,7 +66,6 @@ async def on_message(message):
       discord_data = discord_json["data"][0]
       # account_id = discord_data['discord'] 디스코드 ID
       uuid = discord_data["uuid"]  # 마인크래프트 UUID
-      # 인게임 API, 만약 군인 랭크에게 디스코드 군인 역할을 지급하고 싶다면 nation-ranks를 가져오면 됩니다.
       town_url = f"https://planetearth.kr/api/resident/key={API_KEY}&uuid={uuid}"
       town_request = requests.get(town_url)
       town_json = town_request.json()
