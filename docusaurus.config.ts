@@ -19,21 +19,19 @@ const config: Config = {
     locales: ['ko'],
   },
 
-  themes: [
+  presets: [
     [
-      '@docusaurus/theme-classic',
+      '@docusaurus/preset-classic',
       {
-        customCss: require.resolve('./src/css/custom.css'),
-      },
-    ],
-  ],
-
-  plugins: [
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        path: 'src/docs',
-        routeBasePath: '/',
+        docs: {
+          sidebarPath: require.resolve('./sidebars.js'),
+          path: 'src/docs',
+          routeBasePath: '/',
+          editUrl: 'https://github.com/planetearth-kr/docs/tree/master/',
+        },
+        theme: {
+          customCss: require.resolve('./src/css/custom.css'),
+        },
       },
     ],
   ],
@@ -46,15 +44,15 @@ const config: Config = {
         src: 'img/logo.png',
       },
       items: [
-        {to: 'https://planetearth.kr', label: '홈', position: 'right'},
+        {to: 'https://planetearth.kr', label: '홈', position: 'left'},
         {
           type: 'docSidebar',
-          sidebarId: 'defaultSidebar',
-          position: 'right',
+          sidebarId: 'tutorialSidebar',
+          position: 'left',
           label: '가이드',
         },
-        {to: 'https://planetearth.kr/map', label: '지도', position: 'right'},
-        {to: 'https://planetearth.kr/discord', label: '디스코드', position: 'right'},
+        {to: 'https://planetearth.kr/map', label: '지도', position: 'left'},
+        {to: 'https://planetearth.kr/discord', label: '디스코드', position: 'left'},
         /* {
           href: 'https://github.com/planetearth-kr',
           label: 'GitHub',
@@ -65,6 +63,20 @@ const config: Config = {
     /*footer: {
       copyright: `2022 - ${new Date().getFullYear()} planetearth.kr`,
     },*/
+    algolia: {
+      appId: 'JBGJNIAKWU',
+      apiKey: 'aa67a7f69b5d33ce71b27d65eb937130',
+      indexName: 'planetearth_docs',
+      contextualSearch: true,
+      externalUrlRegex: 'external\\.com|domain\\.com',
+      replaceSearchResultPathname: {
+        from: '/docs/',
+        to: '/',
+      },
+      searchParameters: {},
+      // Optional: path for search page that enabled by default (`false` to disable it)
+      searchPagePath: 'search',
+    },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
