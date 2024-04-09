@@ -38,9 +38,9 @@ const config: Config = {
 
   themeConfig: {
     navbar: {
-      title: 'PlanetEarth',
+      // title: 'PlanetEarth',
       logo: {
-        alt: 'PlanetEarth Logo',
+        alt: 'PlanetEarth',
         src: 'img/logo.png',
       },
       items: [
@@ -52,7 +52,7 @@ const config: Config = {
           label: '가이드',
         },
         {to: 'https://planetearth.kr/map', label: '지도', position: 'left'},
-        {to: 'https://planetearth.kr/discord', label: '디스코드', position: 'left'},
+        {to: 'https://discord.planetearth.kr', label: '디스코드', position: 'left'},
         /* {
           href: 'https://github.com/planetearth-kr',
           label: 'GitHub',
