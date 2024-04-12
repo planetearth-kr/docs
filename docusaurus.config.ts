@@ -29,6 +29,13 @@ const config: Config = {
           routeBasePath: '/',
           editUrl: 'https://github.com/planetearth-kr/docs/tree/master/',
         },
+        sitemap: {
+          lastmod: 'date',
+          changefreq: 'weekly',
+          priority: 0.5,
+          ignorePatterns: ['/tags/**'],
+          filename: 'sitemap.xml',
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
