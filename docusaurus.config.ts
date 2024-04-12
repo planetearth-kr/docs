@@ -73,7 +73,7 @@ const config: Config = {
     algolia: {
       appId: 'K7LZJ1O8AW',
       apiKey: 'a3cec996f9bf8146ef99af8fedd6b2a2',
-      indexName: 'planetearth',
+      indexName: 'planetearth_docs',
       contextualSearch: true,
       externalUrlRegex: 'external\\.com|domain\\.com',
       replaceSearchResultPathname: {
