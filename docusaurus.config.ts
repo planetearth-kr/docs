@@ -76,14 +76,7 @@ const config: Config = {
       apiKey: 'a3cec996f9bf8146ef99af8fedd6b2a2',
       indexName: 'planetearth_docs',
       contextualSearch: true,
-      externalUrlRegex: 'external\\.com|domain\\.com',
-      replaceSearchResultPathname: {
-        from: '/docs/',
-        to: '/',
-      },
       searchParameters: {},
-      // Optional: path for search page that enabled by default (`false` to disable it)
-      searchPagePath: 'search',
     },
     prism: {
       theme: prismThemes.github,
