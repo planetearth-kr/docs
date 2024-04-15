@@ -1,6 +1,6 @@
 name: 내용 추가
 description: 가이드에 더 넣고 싶은게 있나요?
-labels: [feature]
+labels: [enhancement]
 body:
     - type: textarea
       attributes:
