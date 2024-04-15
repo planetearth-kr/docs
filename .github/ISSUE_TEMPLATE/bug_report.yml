@@ -1,0 +1,28 @@
+name: 버그 신고
+description: 가이드 내용에 잘못된 점이 있다면 알려주세요!
+labels: [bug]
+body:
+    - type: textarea
+      attributes:
+          label: 본인의 마인크래프트 닉네임을 적어주세요!
+          description: 예시: Irochi_
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: 어떤 페이지에 문제가 있나요?
+          description: 페이지 주소를 복사해주세요
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: 문제가 되는 부분을 알려주세요!
+          description: 문제가 되는 단어, 문장 등을 복사해주세요!
+      validations:
+          required: true
+    - type: textarea
+      attributes:
+          label: 어떤 식으로 문제가 있나요?
+          description: 단어에 오타가 있나요? 문장이 어색한가요? 개선할 방향을 알려주세요!
+      validations:
+          required: true
