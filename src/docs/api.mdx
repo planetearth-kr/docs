@@ -17,13 +17,13 @@ API는 `planetearth.kr/api` 에서 접근할 수 있습니다. 모든 정보는 
 
 플래닛어스 공식 디스코드에서 문의를 통해 얻을 수 있습니다. 키를 받고 요청에 key 값을 넣으면 됩니다.
 
-예시: `https://planetearth.kr/api/discord/key=JUSTANEXAMPLEKEY&name=Irochi_`
+예시: `https://planetearth.kr/api/discord?key=JUSTANEXAMPLEKEY&name=Irochi_`
 
 ### 사용 가능한 Endpoint
-* `/discord/[디스코드ID(discord), 닉네임(name) 또는 UUID(uuid)]`
-* `/resident/[닉네임(name) 또는 UUID(uuid)]`
-* `/town/[마을이름(name) 또는 마을UUID(uuid)]`
-* `/nation/[국가이름(name) 또는 국가UUID(uuid)]`
+* `/discord?discord=[디스코드ID], /discord?name=[닉네임] 또는 /discord?uuid=[UUID]`
+* `/resident?name=[닉네임], /resident?uuid=[UUID] 또는 /resident?town=[마을이름]`
+* `/town?name=[마을이름] 또는 /town?uuid=[마을UUID]`
+* `/nation?name=[국가이름] 또는 /nation?uuid=[국가UUID]`
 
 ### 예제 코드
 디스코드에서 !auth 를 쳤을 때 해당 유저가 Dev_Island 마을 소속일 경우 역할을 지급하고 별명을 닉네임으로 변경
