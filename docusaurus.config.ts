@@ -52,7 +52,6 @@ const config: Config = {
         src: 'img/logo.png',
       },
       items: [
-        {to: 'https://planetearth.kr', label: '홈', position: 'left'},
         {
           type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
