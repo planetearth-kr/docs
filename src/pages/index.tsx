@@ -1,22 +1,39 @@
+import React, {useState} from 'react';
 import clsx from 'clsx';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Heading from '@theme/Heading';
-
 import styles from './index.module.css';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
+  const [showPopup, setShowPopup] = useState(false);
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText('planetearth.kr');
+      setShowPopup(true);
+      setTimeout(() => setShowPopup(false), 2000);
+    } catch (error) {
+      console.error('복사에 실패했어요:', error);
+    }
+  };
+
   return (
     <header className={clsx('hero hero--primary', styles.heroBanner)}>
-      <div className="container">
+      <div className={clsx('container', styles.containerWithMargins)}>
         <Heading as="h1" className="hero__title">
           {siteConfig.title}
         </Heading>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <a className="button button--secondary button--lg">planetearth.kr</a>
+          <button
+            className={clsx('button button--lg', styles.buttonCustomColor)}
+            onClick={handleCopy}
+          >
+            IP: planetearth.kr
+          </button>
+          {showPopup && <div className={styles.popup}>주소를 복사했어요!</div>}
         </div>
       </div>
     </header>

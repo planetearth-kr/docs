@@ -1,20 +1,52 @@
 .heroBanner {
-  padding: 3rem 0;
+  padding: 3rem 1rem;
   text-align: left;
   position: relative;
   overflow: hidden;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url("/static/img/world.png");
-  background-size: cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)), 
+    url("/static/img/world.png") center/cover;
 }
 
-@media screen and (max-width: 996px) {
-  .heroBanner {
-    padding: 2rem;
-  }
+.containerWithMargins {
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .buttons {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: left;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.popup {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 3px;
+  z-index: 1000;
+  white-space: nowrap;
+  font-size: 0.875rem;
+  animation: fadein 0.5s, fadeout 0.5s 1.7s;
+}
+
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+.buttonCustomColor {
+  background-color: #22c55e;
+  color: white;
+  border: none;
 }
