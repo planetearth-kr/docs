@@ -28,7 +28,7 @@ const config: Config = {
           sidebarPath: require.resolve('./sidebars.js'),
           path: 'src/docs',
           routeBasePath: '/',
-          editUrl: 'https://github.com/planetearth-kr/docs/tree/master/',
+          // editUrl: 'https://github.com/planetearth-kr/docs/tree/master/',
         },
         sitemap: {
           lastmod: 'date',
