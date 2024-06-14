@@ -9,11 +9,8 @@ const config: Config = {
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   trailingSlash: false,
-
-  // GitHub pages deployment config.
-  // If you aren't using GitHub pages, you don't need these.
-  organizationName: 'planetearth-kr', // Usually your GitHub org/user name.
-  projectName: 'docs', // Usually your repo name.
+  organizationName: 'planetearth-kr',
+  projectName: 'docs',
 
   i18n: {
     defaultLocale: 'ko',
