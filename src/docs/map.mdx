@@ -6,3 +6,90 @@ title: 지도
 description: 플래닛어스를 더 지구처럼 보는 방법. 지도에 대해 설명합니다.
 ---
 # 지도
+
+
+![](/img/dynmap/dynmap_preview.png)
+## 지도에 접속하기
+플래닛어스의 지도는 인게임에서 `/map` 명령어를 통해 받거나 [직접 링크에 접속해](https://planetearth.kr/map) 들어가 볼 수 있습니다.
+
+마우스 스크롤을 통해 맵을 키우거나 작게 할 수 있고, 각 버튼을 통해 지도의 다양한 기능을 찾아볼 수 있습니다.
+지도에는 유저들이 만든 마을, 특산품, 점령전, 그리고 접속중인 플레이어들의 각자의 현재 위치가 표시됩니다.
+
+
+## 아이콘 설명
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/greenflag.png) - 소속되지 않은 마을
+
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/blueflag.png) - 국가에 소속된 마을
+
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/king.png) - 국가의 수도
+
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/warning.png) - 멸망한 마을 (폐허)
+
+![](/img/dynmap/koth_marker.png) - 점령전
+
+![](/img/dynmap/conquest_marker.png) - 컨퀘스트 점령전
+
+![](https://raw.githubusercontent.com/TownyAdvanced/SiegeWar/master/src/main/resources/crossedswords.png), ![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/fire.png) - 전쟁
+
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/chest.png) - 특산품
+
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/tree.png) - 목재 특산품
+
+![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/diamond.png), ![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/ruby.png), ![](https://raw.githubusercontent.com/webbukkit/dynmap/master/DynmapCore/src/main/resources/markers/bricks.png) - 특수 특산품
+
+
+## 기능 설명
+
+### 좌표 보기
+지도에서 특정 위치의 좌표를 확인할 수 있습니다.
+<img src="/img/dynmap/dynmap_coordinates.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+지도 좌측 하단에 좌표가 표시됩니다. 해당 위치는 자신의 마우스 커서 위치에 따라 변동됩니다.<br />
+좌표 왼쪽에 있는 버튼을 누르면 해당 좌표를 중심으로 하는 웹지도 링크를 클립보드에 복사합니다.
+
+### 특정 항목을 지도에서 보거나 보지 않기
+지도에서 원하는 항목을 보게 하거나 원하지 않는 항목을 가릴 수 있습니다.
+<img src="/img/dynmap/dynmap_layer_button.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+지도 좌측 상단에서 위 사진처럼 생긴 버튼을 클릭해주세요.
+
+<img src="/img/dynmap/dynmap_layer_button_preview.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+버튼을 누르면 각 항목에 대한 체크박스가 표시됩니다. 이 체크박스를 풀거나 체크해 원하는 항목만 지도에서 볼 수 있습니다.
+
+### 맵 타입 바꾸기
+현재 보고 있는 맵을 다른 타입으로 바꿔 볼 수 있습니다.
+<img src="/img/dynmap/dynmap_menus.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+지도 우측 상단에 있는 버튼 중 제일 왼쪽의 버튼을 클릭해주세요.
+
+<img src="/img/dynmap/dynmap_map_type_button_preview.png" style={{ width: '35%', height: 'auto', marginLeft: '1%'}} /><img src="/img/dynmap/dynmap_preview_3d.png" style={{ width: '62%', height: 'auto', marginLeft: '1%' }} />
+버튼을 누르면 각각 다른 타입의 맵을 선택할 수 있습니다.<br />
+예를들어 world 의 surface 타입을 선택하면 지구 맵을 3D로 볼 수 있습니다.
+
+### 마커 보기
+특정 마을, 국가, 특산품, 전쟁 위치 등을 찾을 수 있습니다.
+<img src="/img/dynmap/dynmap_menus.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+지도 우측 상단에 있는 버튼 중 중앙의 버튼을 클릭해주세요.
+
+<img src="/img/dynmap/dynmap_marker_button_preview.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+버튼을 누르면 각 카테고리가 표시됩니다.
+
+<img src="/img/dynmap/dynmap_marker_button_preview_detail.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+원하는 카테고리를 누르면 해당 카테고리에 맞는 항목들이 표시됩니다.<br />
+각각의 좌표를 확인할 수 있고 항목을 클릭하면 지도에서 해당 좌표로 바로 이동됩니다.<br />
+상단의 검색 칸에서 이름을 검색해 원하는 항목을 바로 찾아볼 수도 있습니다.
+
+
+### 플레이어 보기
+현재 접속중인 플레이어를 볼 수 있습니다.
+<img src="/img/dynmap/dynmap_menus.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+지도 우측 상단에 있는 버튼 중 우측의 버튼을 클릭해주세요.
+
+<img src="/img/dynmap/dynmap_players_button_preview.png" style={{ width: '35%', height: 'auto', marginLeft: '1%' }} />
+버튼을 누르면 현재 접속중인 플레이어들이 표시됩니다.<br />
+플레이어를 클릭하면 지도에서 해당 플레이어가 있는 위치로 바로 이동됩니다.<br />
+상단의 검색 칸에서 이름을 검색해 원하는 항목을 바로 찾아볼 수도 있습니다.
+
+회색으로 표시된 플레이어는 현재 위치를 알 수 없다는 의미로, 스폰에 있을 가능성이 높습니다.
+
+## 후원자 혜택
+Pro 랭크 보유자는 자신의 국가의 색을 변경할 수 있습니다.
+
+`/n set mapcolor [색깔]` 명령어로 변경할 수 있습니다. (왕만 사용할 수 있습니다.)
