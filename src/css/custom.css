@@ -1,10 +1,3 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
-/* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #2e8555;
   --ifm-color-primary-dark: #29784c;
@@ -15,9 +8,9 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-navbar-shadow: none;
 }
 
-/* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
   --ifm-color-primary: #25c2a0;
   --ifm-color-primary-dark: #21af90;
@@ -30,5 +23,77 @@
 }
 
 .hidden {
-display: none !important;
+  display: none !important;
+}
+
+.navbar {
+  border-bottom: var(--ifm-global-border-width) solid var(--ifm-color-emphasis-200);
+}
+
+@media (max-width: 62.25rem) {
+  .navbar__brand {
+    margin: 0 auto;
+    padding-right: 1.75rem;
+  }
+}
+
+.DocSearch-Search-Icon {
+  color: var(--ifm-color-emphasis-600);
+}
+
+.DocSearch-Button-Keys,
+.DocSearch-Button-Placeholder {
+  display: none !important;
+}
+
+.DocSearch-Button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.DocSearch-Form {
+  border-radius: 0;
+  border-bottom: 0.06rem solid var(--docsearch-muted-color);
+}
+
+.DocSearch-Footer {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  border-top: 0.06rem solid var(--docsearch-muted-color);
+}
+
+:root .DocSearch {
+  --docsearch-modal-width: 70vw;
+  --docsearch-modal-background: var(--ifm-background-surface-color);
+  --docsearch-modal-shadow: none;
+  --docsearch-searchbox-background: transparent;
+  --docsearch-searchbox-focus-background: transparent;
+  --docsearch-searchbox-shadow: none;
+  --docsearch-hit-color: var(--ifm-menu-color-active);
+  --docsearch-hit-background: none;
+  --docsearch-hit-shadow: none;
+  --docsearch-key-gradient: none;
+  --docsearch-key-shadow: none;
+  --docsearch-footer-height: 2rem;
+  --docsearch-footer-background: none;
+  --docsearch-footer-shadow: none;
+}
+
+html[data-theme='dark'] .DocSearch {
+  --docsearch-text-color: var(--ifm-color-content);
+  --docsearch-modal-background: var(--ifm-background-surface-color);
+  --docsearch-modal-shadow: none;
+  --docsearch-searchbox-background: transparent;
+  --docsearch-searchbox-focus-background: transparent;
+  --docsearch-hit-color: var(--ifm-menu-color-active);
+  --docsearch-hit-shadow: none;
+  --docsearch-hit-background: none;
+  --docsearch-key-gradient: none;
+  --docsearch-key-shadow: none;
+  --docsearch-footer-background: none;
+  --docsearch-footer-shadow: none;
 }
