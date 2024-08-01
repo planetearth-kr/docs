@@ -17,15 +17,21 @@ API는 `planetearth.kr/api` 에서 접근할 수 있습니다. 모든 정보는 
 
 플래닛어스 공식 디스코드에서 문의를 통해 얻을 수 있습니다. 키를 받고 요청에 key 값을 넣으면 됩니다.
 
+모든 API 접근에는 RATE LIMIT이 존재합니다. Lookup Endpoint와 List Endpoint는 1분에 20회 제한이고, Bulk Lookup Endpoint는 1분에 3회 제한입니다.
+
 예시: `https://planetearth.kr/api/discord?key=JUSTANEXAMPLEKEY&name=Irochi_`
 
-### 사용 가능한 Lookup Endpoints
+### 사용 가능한 Lookup Endpoint
 * `/discord?discord=[디스코드ID], /discord?name=[닉네임] 또는 /discord?uuid=[UUID]`
 * `/resident?name=[닉네임], /resident?uuid=[UUID] 또는 /resident?town=[마을이름]`
 * `/town?name=[마을이름] 또는 /town?uuid=[마을UUID]`
 * `/nation?name=[국가이름] 또는 /nation?uuid=[국가UUID]`
 
-### 사용 가능한 List Endpoints
+### 사용 가능한 Bulk Lookup Endpoint
+* `/bulk/town`
+* `/bulk/nation`
+
+### 사용 가능한 List Endpoint
 * `/resident`
 * `/town`
 * `/nation`
@@ -113,4 +119,10 @@ client.run(TOKEN)
 ```
 
 ### Changelog
+`2024.08.01` - 쿼리를 촤적화했습니다.
+
+`2024.07.28` - Rate Limit을 20회로 증가시켰습니다. Bulk Rate Limit을 3회로 증가시켰습니다.
+
+`2024.07.16` - Bulk List Endpoint가 추가되었습니다.
+
 `2024.06.15` - 변경사항을 공식 문서에 기록하기 시작했습니다.
