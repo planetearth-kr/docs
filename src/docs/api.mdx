@@ -10,16 +10,7 @@ description: API 정보
 
 국가 디스코드 서버에서 연동을 자동화하고 싶나요? 다른 사람의 정보를 쉽게 확인하고 싶다구요? 개발자분들. 지금이 기회입니다.
 ## API 에 접근
-API는 `planetearth.kr/api` 에서 접근할 수 있습니다. 모든 정보는 JSON 형식으로 반환됩니다.
-
-### 테스트 진행중!
-현재 API는 테스트를 진행중입니다. 테스트 도중에는 API에 접근하기 위해 인증 키가 필요합니다.
-
-플래닛어스 공식 디스코드에서 문의를 통해 얻을 수 있습니다. 키를 받고 요청에 key 값을 넣으면 됩니다.
-
-모든 API 접근에는 RATE LIMIT이 존재합니다. Lookup Endpoint와 List Endpoint는 1분에 20회 제한이고, Bulk Lookup Endpoint는 1분에 3회 제한입니다.
-
-예시: `https://planetearth.kr/api/discord?key=JUSTANEXAMPLEKEY&name=Irochi_`
+API는 `api.planetearth.kr` 에서 접근할 수 있습니다. 모든 정보는 JSON 형식으로 반환됩니다.
 
 ### 사용 가능한 Lookup Endpoint
 * `/discord?discord=[디스코드ID], /discord?name=[닉네임] 또는 /discord?uuid=[UUID]`
@@ -28,13 +19,13 @@ API는 `planetearth.kr/api` 에서 접근할 수 있습니다. 모든 정보는 
 * `/nation?name=[국가이름] 또는 /nation?uuid=[국가UUID]`
 
 ### 사용 가능한 Bulk Lookup Endpoint
-* `/bulk/town`
-* `/bulk/nation`
+* `/town/bulk`
+* `/nation/bulk`
 
 ### 사용 가능한 List Endpoint
-* `/resident`
-* `/town`
-* `/nation`
+* `/resident/list`
+* `/town/list`
+* `/nation/list`
 
 ### 예제 코드
 디스코드에서 !auth 를 쳤을 때 해당 유저가 Dev_Island 마을 소속일 경우 역할을 지급하고 별명을 닉네임으로 변경
@@ -44,8 +35,6 @@ import requests
 
 # 봇 토큰
 TOKEN = ""
-# API 키
-API_KEY = ""
 # 역할 ID
 ROLE_ID = ""
 
@@ -67,7 +56,7 @@ async def on_message(message):
     author_id = message.author.id
 
     # 디스코드 API
-    discord_url = f"https://planetearth.kr/api/discord?key={API_KEY}&discord={author_id}"
+    discord_url = f"https://api.planetearth.kr/discord?discord={author_id}"
     discord_request = requests.get(discord_url)
     discord_json = discord_request.json()
 
@@ -80,7 +69,7 @@ async def on_message(message):
       discord_data = discord_json["data"][0]
       # account_id = discord_data['discord'] 디스코드 ID
       uuid = discord_data["uuid"]  # 마인크래프트 UUID
-      town_url = f"https://planetearth.kr/api/resident?key={API_KEY}&uuid={uuid}"
+      town_url = f"https://api.planetearth.kr/resident?uuid={uuid}"
       town_request = requests.get(town_url)
       town_json = town_request.json()
       town_data = town_json["data"][0]
@@ -119,6 +108,8 @@ client.run(TOKEN)
 ```
 
 ### Changelog
+`2024.11.26` - 기본 주소가 https://api.planetearth.kr 로 변경되었습니다. 모든 Rate Limit을 15분에 70회로 변경했습니다. List 엔드포인트와 Bulk 엔드포인트의 접근 주소를 변경했습니다.
+
 `2024.08.01` - 쿼리를 촤적화했습니다.
 
 `2024.07.28` - Rate Limit을 20회로 증가시켰습니다. Bulk Rate Limit을 3회로 증가시켰습니다.
