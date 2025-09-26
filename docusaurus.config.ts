@@ -6,7 +6,6 @@ const config: Config = {
   url: 'https://docs.planetearth.kr/',
   baseUrl: '/',
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
   trailingSlash: false,
   organizationName: 'planetearth-kr',
@@ -15,6 +14,12 @@ const config: Config = {
   i18n: {
     defaultLocale: 'ko',
     locales: ['ko'],
+  },
+
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'warn',
+    },
   },
 
   presets: [
