@@ -58,13 +58,13 @@ description: API 정보
 
 | 코드 | HTTP | 설명 |
 |------|------|------|
-| `NO_DATA_FOUND` | 200 | 조건에 맞는 데이터 없음 |
-| `NO_PARAMETER_PROVIDED` | 200 | 파라메터 누락 |
-| `MULTIPLE_PARAMETERS_PROVIDED` | 200 | 파라메터 2개 이상 입력 |
-| `INVALID_PARAMETERS_PROVIDED` | 200 | 파라메터 형식 오류 |
-| `INVALID_NAME_PROVIDED` | 200 | 존재하지 않는 마인크래프트 닉네임 |
+| `NO_DATA_FOUND` | 404 | 조건에 맞는 데이터 없음 |
+| `NO_PARAMETER_PROVIDED` | 400 | 파라메터 누락 |
+| `MULTIPLE_PARAMETERS_PROVIDED` | 400 | 파라메터 2개 이상 입력 |
+| `INVALID_PARAMETERS_PROVIDED` | 400 | 파라메터 형식 오류 |
+| `INVALID_NAME_PROVIDED` | 404 | 존재하지 않는 마인크래프트 닉네임 |
 | `RATE_LIMITED` | 429 | 요청 횟수 초과 |
-| `UPSTREAM_ERROR` | 503 | Mojang API 연결 실패 |
+| `UPSTREAM_ERROR` | 502 / 503 | 외부 API 연결 실패 (지도 서버: 502, Mojang API: 503) |
 | `SERVER_ERROR` | 500 | 서버 내부 오류 |
 
 ---
@@ -163,7 +163,8 @@ GET https://api.planetearth.kr/town/list
 
 #### `GET /town/bulk`
 
-모든 마을의 전체 정보를 반환합니다.
+모든 마을의 전체 정보를 반환합니다.  
+`onlineMemberCount`, `onlineMembers` 필드는 포함되지 않습니다.
 
 > **Bulk Endpoint** — 15분당 5회 제한
 
@@ -353,7 +354,8 @@ GET https://api.planetearth.kr/resident/list
 
 #### `GET /resident/bulk`
 
-모든 주민의 전체 정보를 반환합니다.
+모든 주민의 전체 정보를 반환합니다.  
+`online` 필드는 포함되지 않습니다.
 
 > **Bulk Endpoint** — 15분당 5회 제한
 
@@ -487,34 +489,47 @@ GET https://api.planetearth.kr/auction/list
 
 ---
 
-#### `GET /auction/transactions`
+#### `GET /auction/transactions/list`
 
-닉네임 또는 UUID로 해당 플레이어의 거래소 거래 내역을 조회합니다.  
-구매자 또는 판매자로 참여한 거래를 최신 순으로 최대 100건 반환합니다.
+최근 거래소 거래 내역 100건을 최신 순으로 반환합니다.
 
-**Query Parameters**
-
-| 파라메터 | 타입 | 설명 |
-|----------|------|------|
-| `name` | string | 마인크래프트 닉네임 |
-| `uuid` | string | 마인크래프트 UUID |
-
-> 파라메터는 하나만 입력해야 합니다.
+> **Bulk Endpoint** — 15분당 5회 제한
 
 **Response Fields**
 
 | 필드 | 타입 | 설명 |
 |------|------|------|
 | `id` | string | 거래 ID |
-| `seller` | string | 판매자 UUID |
-| `buyer` | string | 구매자 UUID |
 | `price` | number | 거래 금액 |
 | `transaction_date` | string | 거래 일시 |
 | `itemInfo` | object | 아이템 정보 (`/auction`과 동일 구조) |
 
 **Example Request**
 ```
-GET https://api.planetearth.kr/auction/transactions?name=Steve
+GET https://api.planetearth.kr/auction/transactions/list
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": [
+    {
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "price": 5000,
+      "transaction_date": "2024-12-31T23:59:59.000Z",
+      "itemInfo": {
+        "type": "minecraft:diamond_sword",
+        "amount": 1,
+        "displayName": "전설의 검",
+        "lore": ["강력한 힘이 깃든 검"],
+        "enchants": [
+          { "id": "minecraft:sharpness", "level": 5 }
+        ]
+      }
+    }
+  ]
+}
 ```
 
 ---
