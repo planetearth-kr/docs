@@ -5,105 +5,598 @@ sidebar_label: API
 title: API
 description: API 정보
 ---
-# API
-플래닛어스는 서버 내 정보에 쉽게 접근하기 위해 공식 API를 제공합니다.
 
-국가 디스코드 서버에서 연동을 자동화하고 싶나요? 다른 사람의 정보를 쉽게 확인하고 싶다구요? 개발자분들. 지금이 기회입니다.
-## API 에 접근
-API는 `api.planetearth.kr` 에서 접근할 수 있습니다. 모든 정보는 JSON 형식으로 반환됩니다.
+# API Reference
 
-### 사용 가능한 Lookup Endpoint
-* `/discord?discord=[디스코드ID], /discord?name=[닉네임] 또는 /discord?uuid=[UUID]`
-* `/resident?name=[닉네임], /resident?uuid=[UUID] 또는 /resident?town=[마을이름]`
-* `/town?name=[마을이름] 또는 /town?uuid=[마을UUID]`
-* `/nation?name=[국가이름] 또는 /nation?uuid=[국가UUID]`
+플래닛어스는 서버 내 데이터에 접근할 수 있는 공개 REST API를 제공합니다.  
+국가 디스코드 봇 제작, 외부 사이트 연동, 자동화 등 다양한 용도로 활용할 수 있습니다.
 
-### 사용 가능한 Bulk Lookup Endpoint
-* `/resident/bulk`
-* `/town/bulk`
-* `/nation/bulk`
+## 기본 정보
 
-### 사용 가능한 List Endpoint
-* `/resident/list`
-* `/town/list`
-* `/nation/list`
+| 항목 | 내용 |
+|------|------|
+| Base URL | `https://api.planetearth.kr` |
+| 응답 형식 | JSON |
+| 인증 | 없음 (공개 API) |
+| 캐시 TTL | 5분 (일반) / 1시간 (Mojang 닉네임·UUID 변환) |
 
-### 예제 코드
-디스코드에서 !auth 를 쳤을 때 해당 유저가 Dev_Island 마을 소속일 경우 역할을 지급하고 별명을 닉네임으로 변경
-```py
+---
+
+## 요청 제한
+
+| 종류 | 제한 |
+|------|------|
+| 일반 엔드포인트 | IP당 **15분에 70회** |
+| Bulk 엔드포인트 | IP당 **15분에 5회** |
+
+---
+
+## 응답 형식
+
+모든 응답은 `status` 필드를 포함합니다.
+
+**성공**
+```json
+{
+  "status": "SUCCESS",
+  "data": [ ... ]
+}
+```
+
+**실패**
+```json
+{
+  "status": "FAILED",
+  "error": {
+    "code": "NO_DATA_FOUND",
+    "message": "주어진 입력에 맞는 정보를 찾을 수 없습니다."
+  }
+}
+```
+
+### 에러 코드
+
+| 코드 | HTTP | 설명 |
+|------|------|------|
+| `NO_DATA_FOUND` | 200 | 조건에 맞는 데이터 없음 |
+| `NO_PARAMETER_PROVIDED` | 200 | 파라메터 누락 |
+| `MULTIPLE_PARAMETERS_PROVIDED` | 200 | 파라메터 2개 이상 입력 |
+| `INVALID_PARAMETERS_PROVIDED` | 200 | 파라메터 형식 오류 |
+| `INVALID_NAME_PROVIDED` | 200 | 존재하지 않는 마인크래프트 닉네임 |
+| `RATE_LIMITED` | 429 | 요청 횟수 초과 |
+| `UPSTREAM_ERROR` | 503 | Mojang API 연결 실패 |
+| `SERVER_ERROR` | 500 | 서버 내부 오류 |
+
+---
+
+## 엔드포인트
+
+### 마을
+
+#### `GET /town`
+
+이름 또는 UUID로 마을 정보를 조회합니다.
+
+**Query Parameters**
+
+| 파라메터 | 타입 | 설명 |
+|----------|------|------|
+| `name` | string | 마을 이름 |
+| `uuid` | string | 마을 UUID |
+
+> 파라메터는 하나만 입력해야 합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `name` | string | 마을 이름 |
+| `uuid` | string | 마을 UUID |
+| `mayor` | string | 마을장 닉네임 |
+| `nation` | string | 소속 국가 이름 |
+| `residents` | string | 주민 목록 (`, ` 구분) |
+| `memberCount` | number | 전체 주민 수 |
+| `onlineMemberCount` | number | 현재 온라인 주민 수 |
+| `onlineMembers` | string | 현재 온라인 주민 목록 (`, ` 구분) |
+| `claimSize` | number | 클레임한 청크 수 |
+| `balance` | number | 마을 잔고 |
+| `townBoard` | string | 마을 게시판 내용 |
+| `trustedResidents` | string | 신뢰 주민 목록 |
+| `outlaws` | string | 아웃로 목록 |
+| `founder` | string | 마을 설립자 |
+| `registered` | number | 마을 설립일 (Unix ms) |
+| `joinedNationAt` | number | 국가 가입일 (Unix ms) |
+| `spawn` | string | 마을 스폰 좌표 |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/town?name=Seoul
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": [
+    {
+      "name": "Seoul",
+      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "mayor": "Steve",
+      "nation": "Korea",
+      "residents": "Steve, Alex",
+      "memberCount": 2,
+      "onlineMemberCount": 1,
+      "onlineMembers": "Steve",
+      "claimSize": 48,
+      "balance": 15000.0,
+      "townBoard": "서울에 오신 것을 환영합니다.",
+      "trustedResidents": "",
+      "outlaws": "",
+      "founder": "Steve",
+      "registered": 1700000000000,
+      "joinedNationAt": 1700000001000,
+      "spawn": "world;0.0;64.0;0.0;0.0;0.0"
+    }
+  ]
+}
+```
+
+---
+
+#### `GET /town/list`
+
+모든 마을의 이름과 UUID 목록을 반환합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `name` | string | 마을 이름 |
+| `uuid` | string | 마을 UUID |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/town/list
+```
+
+---
+
+#### `GET /town/bulk`
+
+모든 마을의 전체 정보를 반환합니다.
+
+> **Bulk Endpoint** — 15분당 5회 제한
+
+**Example Request**
+```
+GET https://api.planetearth.kr/town/bulk
+```
+
+---
+
+### 국가
+
+#### `GET /nation`
+
+이름 또는 UUID로 국가 정보를 조회합니다.
+
+**Query Parameters**
+
+| 파라메터 | 타입 | 설명 |
+|----------|------|------|
+| `name` | string | 국가 이름 |
+| `uuid` | string | 국가 UUID |
+
+> 파라메터는 하나만 입력해야 합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `name` | string | 국가 이름 |
+| `uuid` | string | 국가 UUID |
+| `capital` | string | 수도 마을 이름 |
+| `leader` | string | 국왕 닉네임 |
+| `towns` | string | 소속 마을 목록 (`, ` 구분) |
+| `memberCount` | number | 전체 주민 수 |
+| `balance` | number | 국가 잔고 |
+| `allies` | string | 동맹 국가 목록 |
+| `enemies` | string | 적대 국가 목록 |
+| `nationBoard` | string | 국가 게시판 내용 |
+| `registered` | number | 국가 설립일 (Unix ms) |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/nation?name=Korea
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": [
+    {
+      "name": "Korea",
+      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "capital": "Seoul",
+      "leader": "Steve",
+      "towns": "Seoul, Busan",
+      "memberCount": 10,
+      "balance": 100000.0,
+      "allies": "Japan",
+      "enemies": "",
+      "nationBoard": "대한민국에 오신 것을 환영합니다.",
+      "registered": 1700000000000
+    }
+  ]
+}
+```
+
+---
+
+#### `GET /nation/list`
+
+모든 국가의 이름과 UUID 목록을 반환합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `name` | string | 국가 이름 |
+| `uuid` | string | 국가 UUID |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/nation/list
+```
+
+---
+
+#### `GET /nation/bulk`
+
+모든 국가의 전체 정보를 반환합니다.
+
+> **Bulk Endpoint** — 15분당 5회 제한
+
+**Example Request**
+```
+GET https://api.planetearth.kr/nation/bulk
+```
+
+---
+
+### 주민
+
+#### `GET /resident`
+
+닉네임, UUID, 또는 마을 이름으로 주민 정보를 조회합니다.  
+마을 이름으로 조회 시 해당 마을 소속 주민 전체가 반환됩니다.
+
+**Query Parameters**
+
+| 파라메터 | 타입 | 설명 |
+|----------|------|------|
+| `name` | string | 마인크래프트 닉네임 |
+| `uuid` | string | 마인크래프트 UUID |
+| `town` | string | 마을 이름 |
+
+> 파라메터는 하나만 입력해야 합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `name` | string | 닉네임 |
+| `uuid` | string | UUID |
+| `town` | string | 소속 마을 |
+| `nation` | string | 소속 국가 |
+| `townRanks` | string | 마을 직위 |
+| `nationRanks` | string | 국가 직위 |
+| `title` | string | 칭호 (이름 앞) |
+| `surname` | string | 칭호 (이름 뒤) |
+| `balance` | number | 잔고 |
+| `friends` | string | 친구 목록 |
+| `registered` | number | 첫 접속일 (Unix ms) |
+| `lastOnline` | number | 마지막 접속일 (Unix ms) |
+| `joinedTownAt` | number | 마을 가입일 (Unix ms) |
+| `online` | boolean | 현재 온라인 여부 |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/resident?name=Steve
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": [
+    {
+      "name": "Steve",
+      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "town": "Seoul",
+      "nation": "Korea",
+      "townRanks": "",
+      "nationRanks": "",
+      "title": "",
+      "surname": "",
+      "balance": 3200.0,
+      "friends": "Alex",
+      "registered": 1700000000000,
+      "lastOnline": 1700000100000,
+      "joinedTownAt": 1700000050000,
+      "online": true
+    }
+  ]
+}
+```
+
+---
+
+#### `GET /resident/list`
+
+모든 주민의 이름과 UUID 목록을 반환합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `name` | string | 닉네임 |
+| `uuid` | string | UUID |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/resident/list
+```
+
+---
+
+#### `GET /resident/bulk`
+
+모든 주민의 전체 정보를 반환합니다.
+
+> **Bulk Endpoint** — 15분당 5회 제한
+
+**Example Request**
+```
+GET https://api.planetearth.kr/resident/bulk
+```
+
+---
+
+### 디스코드 연동
+
+#### `GET /discord`
+
+디스코드 ID, UUID, 또는 닉네임으로 마인크래프트 ↔ 디스코드 연동 정보를 조회합니다.  
+`name` 파라메터 사용 시 Mojang API를 통해 UUID로 변환합니다.
+
+**Query Parameters**
+
+| 파라메터 | 타입 | 설명 |
+|----------|------|------|
+| `discord` | string | 디스코드 ID (17~19자리 숫자) |
+| `uuid` | string | 마인크래프트 UUID |
+| `name` | string | 마인크래프트 닉네임 |
+
+> 파라메터는 하나만 입력해야 합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `discord` | string | 디스코드 ID |
+| `uuid` | string | 마인크래프트 UUID |
+| `name` | string | 마인크래프트 닉네임 |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/discord?discord=123456789012345678
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": [
+    {
+      "discord": "123456789012345678",
+      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "name": "Steve"
+    }
+  ]
+}
+```
+
+---
+
+### 경매장
+
+#### `GET /auction`
+
+닉네임, UUID, 또는 경매 ID로 현재 등록된 경매 아이템을 조회합니다.
+
+**Query Parameters**
+
+| 파라메터 | 타입 | 설명 |
+|----------|------|------|
+| `name` | string | 판매자 닉네임 |
+| `uuid` | string | 판매자 UUID |
+| `id` | string | 경매 아이템 UUID |
+
+> 파라메터는 하나만 입력해야 합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `id` | string | 경매 아이템 UUID |
+| `seller` | string | 판매자 UUID |
+| `sellerName` | string | 판매자 닉네임 |
+| `price` | number | 판매가 |
+| `expire_at` | string | 경매 만료 일시 |
+| `itemInfo.type` | string | 아이템 종류 (예: `minecraft:diamond_sword`) |
+| `itemInfo.amount` | number | 수량 |
+| `itemInfo.displayName` | string \| null | 이름 (없으면 `null`) |
+| `itemInfo.lore` | string[] | 설명 줄 목록 |
+| `itemInfo.enchants` | object[] | 인첸트 목록 (`{ id, level }`) |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/auction?name=Steve
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": [
+    {
+      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "seller": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+      "sellerName": "Steve",
+      "price": 5000,
+      "expire_at": "2024-12-31T23:59:59.000Z",
+      "itemInfo": {
+        "type": "minecraft:diamond_sword",
+        "amount": 1,
+        "displayName": "전설의 검",
+        "lore": ["강력한 힘이 깃든 검"],
+        "enchants": [
+          { "id": "minecraft:sharpness", "level": 5 },
+          { "id": "minecraft:unbreaking", "level": 3 }
+        ]
+      }
+    }
+  ]
+}
+```
+
+---
+
+#### `GET /auction/list`
+
+현재 경매 중인 모든 아이템을 반환합니다. 만료 일시 기준 오름차순 정렬.
+
+> **Bulk Endpoint** — 15분당 5회 제한
+
+**Example Request**
+```
+GET https://api.planetearth.kr/auction/list
+```
+
+---
+
+#### `GET /auction/transactions`
+
+닉네임 또는 UUID로 해당 플레이어의 경매 거래 내역을 조회합니다.  
+구매자 또는 판매자로 참여한 거래를 최신 순으로 최대 100건 반환합니다.
+
+**Query Parameters**
+
+| 파라메터 | 타입 | 설명 |
+|----------|------|------|
+| `name` | string | 마인크래프트 닉네임 |
+| `uuid` | string | 마인크래프트 UUID |
+
+> 파라메터는 하나만 입력해야 합니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `id` | string | 거래 ID |
+| `seller` | string | 판매자 UUID |
+| `buyer` | string | 구매자 UUID |
+| `price` | number | 거래 금액 |
+| `transaction_date` | string | 거래 일시 |
+| `itemInfo` | object | 아이템 정보 (`/auction`과 동일 구조) |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/auction/transactions?name=Steve
+```
+
+---
+
+### 온라인 플레이어
+
+#### `GET /online`
+
+현재 서버에 접속 중인 플레이어 목록을 반환합니다.
+
+**Example Request**
+```
+GET https://api.planetearth.kr/online
+```
+
+**Example Response**
+```json
+{
+  "status": "SUCCESS",
+  "data": {
+    "total": 3,
+    "players": ["Steve", "Alex", "Notch"]
+  }
+}
+```
+
+---
+
+## 활용 예시
+
+### 디스코드 인증 봇 (Python)
+
+`!auth` 명령어를 사용한 유저가 `Dev_Island` 마을 소속이면 역할을 지급하고 닉네임을 변경하는 예시입니다.
+
+```python
 import discord
 import requests
 
-# 봇 토큰
-TOKEN = ""
-# 역할 ID
-ROLE_ID = ""
+TOKEN = ""    # 봇 토큰
+ROLE_ID = ""  # 지급할 역할 ID
 
 intents = discord.Intents.all()
 client = discord.Client(intents=intents)
 
 @client.event
 async def on_ready():
-  print(f"{client.user}")
+    print(f"Logged in as {client.user}")
 
 @client.event
 async def on_message(message):
-  if message.author == client.user:
-    return
+    if message.author == client.user:
+        return
 
-  # !auth를 쳤을때
-  if message.content.startswith("!auth"):
-    # SENDER id 가져오기
-    author_id = message.author.id
+    if not message.content.startswith("!auth"):
+        return
 
-    # 디스코드 API
-    discord_url = f"https://api.planetearth.kr/discord?discord={author_id}"
-    discord_request = requests.get(discord_url)
-    discord_json = discord_request.json()
+    # 1. 디스코드 ID → 마인크래프트 UUID 조회
+    res = requests.get(f"https://api.planetearth.kr/discord?discord={message.author.id}").json()
+    if res["status"] != "SUCCESS":
+        await message.channel.send("플래닛어스 디스코드에 인증되지 않은 유저입니다.")
+        return
 
-    # 서버, 역할 가져오기
+    uuid = res["data"][0]["uuid"]
+
+    # 2. UUID → 주민 정보 조회
+    res = requests.get(f"https://api.planetearth.kr/resident?uuid={uuid}").json()
+    if res["status"] != "SUCCESS":
+        await message.channel.send("타우니 데이터를 가져올 수 없습니다.")
+        return
+
+    resident = res["data"][0]
+
+    # 3. 마을 확인 후 역할 지급
+    if resident["town"] != "Dev_Island":
+        await message.channel.send("Dev_Island 마을에 가입되지 않은 플레이어입니다.")
+        return
+
     guild = message.guild
     role = discord.utils.get(guild.roles, id=int(ROLE_ID))
-
-    # SUCCESS인지 확인
-    if discord_json["status"] == "SUCCESS":
-      discord_data = discord_json["data"][0]
-      # account_id = discord_data['discord'] 디스코드 ID
-      uuid = discord_data["uuid"]  # 마인크래프트 UUID
-      town_url = f"https://api.planetearth.kr/resident?uuid={uuid}"
-      town_request = requests.get(town_url)
-      town_json = town_request.json()
-      town_data = town_json["data"][0]
-      town_name = town_data["town"]
-
-      # 마을 이름이 같을 때
-      if town_name == "Dev_Island":
-        # 마인크래프트 닉네임 가져오기
-        ign = town_data["name"]
-        # 역할 부여, 성공 메시지 전송, 마인크래프트 닉네임으로 별명 변경
-        await message.channel.send("인증에 성공했습니다! 권한을 지급합니다.")
-        # await message.channel.send(f"마을 {town_name}")
-        await message.author.add_roles(role)
-        await message.author.edit(nick=ign)
-
-      # FAILED인지 확인
-      elif town_json["status"] == "FAILED":
-        # 실패 메시지 전송
-        await message.channel.send("타우니 데이터를 가져올 수 없습니다.")
-      # 마을 이름이 같지 않을 때
-      elif town_name != "Dev_Island":
-        # 실패 메시지 전송
-        await message.channel.send("마을에 가입되지 않은 플레이어입니다.")
-      else:
-        # 오류 메시지 전송
-        await message.channel.send("오류가 발생했습니다. 관리자에게 문의해주세요.")
-    # FAILED인지 확인
-    elif discord_json["status"] == "FAILED":
-      # 실패 메시지 전송
-      await message.channel.send("플래닛어스 디스코드에 인증되지 않은 유저입니다.")
-    else:
-      # 오류 메시지 전송
-      await message.channel.send("오류가 발생했습니다. 관리자에게 문의해주세요.")
+    await message.author.add_roles(role)
+    await message.author.edit(nick=resident["name"])
+    await message.channel.send("인증에 성공했습니다! 권한을 지급합니다.")
 
 client.run(TOKEN)
 ```
