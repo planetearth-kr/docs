@@ -101,7 +101,7 @@ description: API 정보
 | `claimSize` | number | 클레임한 청크 수 |
 | `balance` | number | 마을 잔고 |
 | `townBoard` | string | 마을 게시판 내용 |
-| `trustedResidents` | string | 신뢰 주민 목록 |
+| `trustedResidents` | string | 트러스트 주민 목록 |
 | `outlaws` | string | 아웃로 목록 |
 | `founder` | string | 마을 설립자 |
 | `registered` | number | 마을 설립일 (Unix ms) |
@@ -364,7 +364,7 @@ GET https://api.planetearth.kr/resident/bulk
 
 ---
 
-### 디스코드 연동
+### 디스코드
 
 #### `GET /discord`
 
@@ -375,7 +375,7 @@ GET https://api.planetearth.kr/resident/bulk
 
 | 파라메터 | 타입 | 설명 |
 |----------|------|------|
-| `discord` | string | 디스코드 ID (17~19자리 숫자) |
+| `discord` | string | 디스코드 ID |
 | `uuid` | string | 마인크래프트 UUID |
 | `name` | string | 마인크래프트 닉네임 |
 
@@ -410,11 +410,11 @@ GET https://api.planetearth.kr/discord?discord=123456789012345678
 
 ---
 
-### 경매장
+### 거래소
 
 #### `GET /auction`
 
-닉네임, UUID, 또는 경매 ID로 현재 등록된 경매 아이템을 조회합니다.
+닉네임, UUID, 또는 경매 ID로 현재 등록된 유저 거래소 아이템을 조회합니다.
 
 **Query Parameters**
 
@@ -422,7 +422,7 @@ GET https://api.planetearth.kr/discord?discord=123456789012345678
 |----------|------|------|
 | `name` | string | 판매자 닉네임 |
 | `uuid` | string | 판매자 UUID |
-| `id` | string | 경매 아이템 UUID |
+| `id` | string | 아이템 UUID |
 
 > 파라메터는 하나만 입력해야 합니다.
 
@@ -430,14 +430,14 @@ GET https://api.planetearth.kr/discord?discord=123456789012345678
 
 | 필드 | 타입 | 설명 |
 |------|------|------|
-| `id` | string | 경매 아이템 UUID |
+| `id` | string | 아이템 UUID |
 | `seller` | string | 판매자 UUID |
 | `sellerName` | string | 판매자 닉네임 |
 | `price` | number | 판매가 |
 | `expire_at` | string | 경매 만료 일시 |
 | `itemInfo.type` | string | 아이템 종류 (예: `minecraft:diamond_sword`) |
 | `itemInfo.amount` | number | 수량 |
-| `itemInfo.displayName` | string \| null | 이름 (없으면 `null`) |
+| `itemInfo.displayName` | string \| null | 이름 (없을 경우 `null`) |
 | `itemInfo.lore` | string[] | 설명 줄 목록 |
 | `itemInfo.enchants` | object[] | 인첸트 목록 (`{ id, level }`) |
 
@@ -476,7 +476,7 @@ GET https://api.planetearth.kr/auction?name=Steve
 
 #### `GET /auction/list`
 
-현재 경매 중인 모든 아이템을 반환합니다. 만료 일시 기준 오름차순 정렬.
+현재 거래소에 있는 모든 아이템을 반환합니다. 만료 일시 기준 오름차순 정렬.
 
 > **Bulk Endpoint** — 15분당 5회 제한
 
@@ -489,7 +489,7 @@ GET https://api.planetearth.kr/auction/list
 
 #### `GET /auction/transactions`
 
-닉네임 또는 UUID로 해당 플레이어의 경매 거래 내역을 조회합니다.  
+닉네임 또는 UUID로 해당 플레이어의 거래소 거래 내역을 조회합니다.  
 구매자 또는 판매자로 참여한 거래를 최신 순으로 최대 100건 반환합니다.
 
 **Query Parameters**
