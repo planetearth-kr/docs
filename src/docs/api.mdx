@@ -110,7 +110,7 @@ description: API 정보
 
 **Example Request**
 ```
-GET https://api.planetearth.kr/town?name=Seoul
+GET https://api.planetearth.kr/town?name=Dev_Island
 ```
 
 **Example Response**
@@ -119,23 +119,23 @@ GET https://api.planetearth.kr/town?name=Seoul
   "status": "SUCCESS",
   "data": [
     {
-      "name": "Seoul",
-      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      "mayor": "Steve",
-      "nation": "Korea",
-      "residents": "Steve, Alex",
-      "memberCount": 2,
+      "name": "Dev_Island",
+      "uuid": "36315f61-0685-4668-865c-87e0ca85cfda",
+      "mayor": "aceda8",
+      "nation": "Dev",
+      "residents": "aceda8, ashpoints, Heiz, Irochi_, I_loveryo, LonelyUniverse_, MA5O, Maltes_, Royang_, Squirrel, TownyAPI, Virtual_Tabi, Yellim",
+      "memberCount": 13,
       "onlineMemberCount": 1,
-      "onlineMembers": "Steve",
-      "claimSize": 48,
-      "balance": 15000.0,
-      "townBoard": "서울에 오신 것을 환영합니다.",
+      "onlineMembers": "Heiz",
+      "claimSize": 82,
+      "balance": 512031.0,
+      "townBoard": "d",
       "trustedResidents": "",
       "outlaws": "",
-      "founder": "Steve",
-      "registered": 1700000000000,
-      "joinedNationAt": 1700000001000,
-      "spawn": "world;0.0;64.0;0.0;0.0;0.0"
+      "founder": "Irochi_",
+      "registered": 1663982084499,
+      "joinedNationAt": 1725978155425,
+      "spawn": "world, -1682.9804406008402, 130.0, 5095.724900104271, 37.90424, 5.7425537"
     }
   ]
 }
@@ -208,7 +208,7 @@ GET https://api.planetearth.kr/town/bulk
 
 **Example Request**
 ```
-GET https://api.planetearth.kr/nation?name=Korea
+GET https://api.planetearth.kr/nation?name=Dev
 ```
 
 **Example Response**
@@ -217,17 +217,17 @@ GET https://api.planetearth.kr/nation?name=Korea
   "status": "SUCCESS",
   "data": [
     {
-      "name": "Korea",
-      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      "capital": "Seoul",
-      "leader": "Steve",
-      "towns": "Seoul, Busan",
-      "memberCount": 10,
-      "balance": 100000.0,
-      "allies": "Japan",
+      "name": "Dev",
+      "uuid": "6bcf7309-d828-4a83-88fb-02a63d69d821",
+      "capital": "Dev_Island",
+      "leader": "aceda8",
+      "towns": "Dev_Island",
+      "memberCount": 13,
+      "balance": 956188.0,
+      "allies": "",
       "enemies": "",
-      "nationBoard": "대한민국에 오신 것을 환영합니다.",
-      "registered": 1700000000000
+      "nationBoard": "/nation set board [메세지]",
+      "registered": 1725978155425
     }
   ]
 }
@@ -304,7 +304,7 @@ GET https://api.planetearth.kr/nation/bulk
 
 **Example Request**
 ```
-GET https://api.planetearth.kr/resident?name=Steve
+GET https://api.planetearth.kr/resident?name=Irochi_
 ```
 
 **Example Response**
@@ -313,20 +313,20 @@ GET https://api.planetearth.kr/resident?name=Steve
   "status": "SUCCESS",
   "data": [
     {
-      "name": "Steve",
-      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      "town": "Seoul",
-      "nation": "Korea",
+      "name": "Irochi_",
+      "uuid": "626dfe3b-7820-48c7-9974-1e332b4ffe60",
+      "town": "Dev_Island",
+      "nation": "Dev",
       "townRanks": "",
-      "nationRanks": "",
+      "nationRanks": "군인, PVP",
       "title": "",
       "surname": "",
-      "balance": 3200.0,
-      "friends": "Alex",
-      "registered": 1700000000000,
-      "lastOnline": 1700000100000,
-      "joinedTownAt": 1700000050000,
-      "online": true
+      "balance": 5448.0,
+      "friends": "",
+      "registered": 1663865955658,
+      "lastOnline": 1777807004043,
+      "joinedTownAt": 1766499540032,
+      "online": false
     }
   ]
 }
@@ -393,7 +393,7 @@ GET https://api.planetearth.kr/resident/bulk
 
 **Example Request**
 ```
-GET https://api.planetearth.kr/discord?discord=123456789012345678
+GET https://api.planetearth.kr/discord?name=Irochi_
 ```
 
 **Example Response**
@@ -402,9 +402,9 @@ GET https://api.planetearth.kr/discord?discord=123456789012345678
   "status": "SUCCESS",
   "data": [
     {
-      "discord": "123456789012345678",
-      "uuid": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      "name": "Steve"
+      "discord": "1086117494189723658",
+      "uuid": "626dfe3b-7820-48c7-9974-1e332b4ffe60",
+      "name": "Irochi_"
     }
   ]
 }
@@ -550,8 +550,14 @@ GET https://api.planetearth.kr/online
 {
   "status": "SUCCESS",
   "data": {
-    "total": 3,
-    "players": ["Steve", "Alex", "Notch"]
+    "total": 57,
+    "players": [
+      "Heiz",
+      "Irochi_",
+      "Ago",
+      "Yellim",
+      "..."
+    ]
   }
 }
 ```
