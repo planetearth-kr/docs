@@ -55,6 +55,28 @@
   height: 1.75rem;
 }
 
+.dynmap-screenshot {
+  width: 35%;
+  height: auto;
+  margin-left: 1%;
+}
+
+.dynmap-screenshot-wide {
+  width: 62%;
+  height: auto;
+  margin-left: 1%;
+}
+
+.dynmap-screenshot-half {
+  width: 50%;
+  height: auto;
+  margin-left: 1%;
+}
+
+.dynmap-marker {
+  vertical-align: middle;
+}
+
 .DocSearch-Form {
   border-radius: 0;
   border-bottom: 0.06rem solid var(--docsearch-muted-color);

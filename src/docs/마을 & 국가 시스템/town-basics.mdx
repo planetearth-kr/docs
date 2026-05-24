@@ -1,0 +1,211 @@
+---
+slug: /towny/basics
+sidebar_position: 5
+sidebar_label: 타우니 기초
+title: 타우니 기초 가이드
+description: 마을 설립과 기본 타우니 사용법입니다.
+---
+
+## 마을 설립하기
+
+서버가 처음이신 뉴비분들에게는 난이도가 있는 마을 설립보다는 다른 마을에 가입하는 것을 추천드립니다. 본 가이드는 마을 설립을 하시려는 분들을 위한 기초 가이드입니다.
+
+/t new [마을이름] 으로 원하는 곳에 마을을 만듭니다. 
+마을 설립에는 5000원이 소모됩니다.
+
+## 마을/국가는 어디에 지어야 하나요?
+
+플래닛어스에서는 텔레포트가 제한되어 있고, 국가 간 교류는 철도, 보트, 말, 정기선을 이용합니다. 따라서 어느 곳에 마을을 지을지 신중히 생각해야 합니다.
+
+여러 국가가 밀집한 곳 (유럽 등), 또는 항구 주변에 마을/국가를 설립하면, 그만큼 분쟁이나 전쟁의 위험도 늘어나지만, 편리한 교통과 주변국들과의 손쉬운 외교와 무역으로 국가 발전에 도움이 됩니다.
+
+반대로, 인구밀도가 낮거나 항구에서 멀리 떨어진 곳에 마을/국가를 설립하면, 다른 국가들과 외교 및 무역이 어려워지지만, 고립주의 노선을 타면서 분쟁이나 전쟁의 위험이 낮아집니다.
+
+[Minecraft Dynamic Map - LiveAtlas](https://planetearth.kr/map/)
+
+## 마을 설립 후
+
+/t deposit [금액] 으로 마을 금고에 돈을 넣어서 유지비를 지불합니다.
+현실 시간 기준 매일 오후 11시에 모든 마을과 국가는 유지비를 지불합니다. 유지비를 내지 못할 경우 마을이 삭제됩니다. 유지비 및 보유 금액은 /t 또는 /n 으로 확인할 수 있습니다. 
+
+/t invite [플레이어] 로 새 주민을 마을에 초대합니다
+
+/t claim 으로 서있는 야생 땅을 마을 땅으로 확장합니다. 마을 땅은 외부인으로부터 보호됩니다.
+
+## 마을 가입 후
+
+/t spawn 으로 마을 스폰으로 이동하세요. 만약 마을이 국가가 있다면, /n spawn 으로 국가 수도로 이동할 수 있습니다.
+
+## 마을 랭크
+
+마을은 시장 말고도 부시장, 부관, 사무관, 트러스트 등의 랭크가 존재합니다.
+
+/t rank add/remove [플레이어] 부시장: 부시장 권한을 부여합니다. 부시장은 마을 삭제/합병을 제외하고 시장과 동등한 권한을 가집니다.
+
+/t rank add/remove [플레이어] 부관: 부관은 부시장보다 낮은 권한을 가졌지만, 플레이어 초대, 마을 땅 확장 등의 제한적인 권한을 가집니다.
+
+/t rank add/remove [플레이어] 사무관: 사무관은 마을의 사무적인 일을 처리하는 직위로, 인원 초대, 자원 수집, 마을 스폰 설정, 마을 클레임이 가능합니다. 부시장과 다르게 추방, 언클레임, 시즈 관련 행동은 불가능합니다.
+
+/t trust add/remove [외부인 이름]: 마을 외부인에게 마을의 TRUST권한을 부여합니다. TRUST권한이 있는 플레이어는 마을에 블럭 설치/파괴, 상자 열기 등이 가능합니다.
+
+### 마을 권한 목록
+
+<table>
+<colgroup><col style={{width:'32%'}}/><col/><col/><col/><col/><col/></colgroup>
+<thead><tr><th>명령어</th><th>시장</th><th>부시장</th><th>부관</th><th>사무관</th><th>시민</th></tr></thead>
+<tbody>
+<tr><td><code>town add</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>town bankhistory</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town claim</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
+<tr><td><code>town delete</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>town deposit</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>town kick</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town mayor</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>town merge</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>town online</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>town outlaw</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
+<tr><td><code>town plotgrouplist</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town rank add/remove</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town ranklist</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>town reslist</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>town resources collect</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
+<tr><td><code>town resources survey</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set board</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set embassyprice</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set embassytax</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set homeblock</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set mapcolor</code></td><td></td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>town set name</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set perm</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set plotprice</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set plottax</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set spawn</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
+<tr><td><code>town set spawncost</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set surname</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set taxes</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set taxpercentcap</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town set title</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town spawn</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>town toggle</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town trust</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town trusttown</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
+<tr><td><code>town unclaim</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>town withdraw</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
+<tr><td><code>plot claim</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>plot perm</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>plot forsale</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot notforsale</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot group</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot info</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
+<tr><td><code>plot set</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot toggle</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot trust</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot clear</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+<tr><td><code>plot district</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
+</tbody>
+</table>
+
+## **마을 권한**
+
+마을 권한에는 4종류의 권한이 존재합니다
+
+- Destroy: 블럭 파괴 및 동물 킬
+- Build: 블럭 설치
+- Switch: 상자 열기
+- Itemuse: 아이템 사용
+
+기본적으로 모든 마을원은 위 4가지 권한을 모두 가지고 있으나, 마을 권한 명령어를 이용해서 수정할 수 있습니다.
+
+**/t set perm [residence/nation/ally/outsider] [build/destroy/switch/itemuse] [on/off]**
+
+예시
+
+- /t set perm nation switch on: 국가원(nation)의 상자 열기(switch) 권한을 킵니다(on)
+- /t set perm ally switch on: 동맹(ally)의 상자 열기(switch) 권한을 킵니다(on).
+
+마을의 권한은 /t를 했을때 보입니다. 
+
+![section](/img/guide/towny/basics/basics-section-01.webp)
+
+예시) Build, Destroy, Switch, Itemuse 권한 모두 **R**esidence(마을 주민)에게 열려 있습니다.
+
+## 트러스트 (Trust)
+
+Trust는 일반적인 마을 권한보다 더 높은 권한입니다. 트러스트를 받은 플레이어는 마을 땅의 모든 블럭 및 상자에 대한 권한을 가지며, 이는 개인 플롯과 마을의 기본 권한보다 우선 순위에 있습니다.
+
+/t trust add: 플레이어를 트러스트에 추가합니다
+
+/t trust remove: 플레이어를 트러스트에서 제거합니다
+
+/t trust list: 마을의 모든 트러스트 목록을 봅니다
+
+## **마을 세금**
+
+마을은 모든 마을원들에게 매일 세금을 징수할 수 있습니다. 세금은 유지비가 지불되는 현실 시간 오후 11시에 자동으로 마을원 계좌에서 마을 금고로 빠져나갑니다.
+
+세금은 마을원의 개인 계좌에서 설정한 % 만큼 세금을 징수합니다. 마을원이 세금을 내지 못해도 마을에서 추방당하지 않습니다. 세율은 최소 0.875%까지 설정 가능하며, 최대 1.5%까지 늘릴 수 있습니다.
+세율을 1.5%까지 늘린다 하더라도, 개인에게 걷을 수 있는 하루 최대 세금은 2000골드 입니다.
+
+:::info
+/t set taxes [퍼센트] 으로 세금의 양을 설정하세요.
+:::
+
+국가 또한 각 소속 마을들로부터 /n set taxes 명령어로 세금을 설정할 수 있습니다. 마을과는 달리, 국가 세금은 퍼센트로 징수할 수 없습니다.
+
+## 국가
+
+국가를 만들면 본격적으로 다른 국가와 외교를 할 수 있습니다. (/n new)
+국가 설립에는 5000원이 소모됩니다.
+
+/n ally: 국가의 동맹을 관리합니다.
+
+/n enemy: 국가의 적대국을 관리합니다.
+
+/n add [마을]: 마을을 국가에 초대합니다.
+국가에 새로운 마을을 초대하기 위해서는 해당 마을이 기존에 국가에 속해있던 마을과 25청크 이내의 거리여야 하고, 비교 대상인 기존 마을 또한 국가 소속의 나머지 마을들과 25청크 이내에 있어야 합니다.
+
+/n deposit [금액]: 국고에 돈을 넣습니다.
+
+/n rank add/remove [플레이어] 부왕: 플레이어를 부왕으로 임명합니다. 부왕은 국가 삭제 및 합병, 그리고 전쟁 선포를 제외한 모든 왕 권한을 가집니다.
+
+## 국가 랭크
+
+국가는 국왕 말고도 부왕, 부관, 외교관, 지휘관 랭크가 존재합니다.
+
+/n rank add/remove [플레이어] 부왕: 부왕 권한을 부여합니다. 부왕은 수도 변경, 국가 삭제를 제외한 모든 권한을 가집니다.
+
+/n rank add/remove [플레이어] 부관: 부관 역할을 부여합니다. 부관은 국가 초대, 동맹 설정, 적대 설정, 스폰 설정을 할 수 있습니다.
+
+/n rank add/remove [플레이어] 외교관: 외교관 역할을 부여합니다. 외교관은 오직 국가의 동맹, 적대 설정만 진행할 수 있는 역할입니다.
+
+/n rank add/remove [플레이어] 지휘관: 지휘관 역할을 부여합니다. 지휘관은 오직 집결 명령어와 스폰 설정만 할 수 있는 역할입니다. 
+
+/n rank add/remove [플레이어] 인사부: 인사부 역할을 부여합니다. 이 역할을 가지고 있는 시장/부시장은 이 랭크를 가지고 있지 않은 시장/부시장 보다 뉴비 가입 알람이 빨리 옵니다. 따라서, 국가의 소속 마을 중 집중적으로 키우고 싶은 마을의 시장에게 부여하는 것을 추천드립니다.
+
+## 유지비
+
+모든 마을과 국가는 매일 오후 11시에 일정량의 유지비를 지불해야 합니다.
+
+유지비를 지불하지 못하면 마을/국가가 삭제되고, 복구할 수 없습니다.
+
+**마을 유지비:** 마을의 영토와 인원수에 비례하여 증가합니다.
+
+**국가 유지비**: 국가의 마을 개수, 인원수, 동맹국의 규모에 비례하여 증가합니다.
+
+## 휴면유저 유지비
+
+마을원 1명은 60의 추가 청크를 제공합니다.
+
+그러나 마을에 180일 이상 접속하지 않은 휴면 유저가 있으면 휴면유저 1명당 60의 추가 청크를 제공하지 않는 것으로 취급됩니다. 만약 마을이 이보다 더 많은 영토를 점유하고 있으면 추가로 점유하고 있는 영토에 비례하여 휴면유저 유지비가 증가합니다.
+
+휴면유저 유지비를 지불하는 마을은 추가 영토 점유가 불가능합니다.
+
+휴면유저 유지비를 줄이려면 추가로 점유중인 마을 영토를 점유 해제해야 합니다.
+
+## 비활동 마을 유지비
+
+마을이 일정 기간 충분한 활동이 없으면 비활동 마을로 분류되어 추가 유지비가 징수됩니다.
+
+항구 마을 (항구 근처에 영토를 가지고 있는 마을): 매일 일정량의 활동점수를 얻지 못하면 비활동 마을 유지비가 징수됩니다. 활동점수는 일반적인 서버 플레이로 획득할 수 있습니다.
+
+일반 마을: 5일 동안 1번도 접속한 마을원이 없는 마을에게 비활동 마을 유지비가 징수됩니다.

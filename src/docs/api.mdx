@@ -6,7 +6,7 @@ title: API
 description: API 정보
 ---
 
-# API Reference
+# API
 
 플래닛어스는 서버 내 데이터에 접근할 수 있는 공개 REST API를 제공합니다.  
 국가 디스코드 봇 제작, 외부 사이트 연동, 자동화 등 다양한 용도로 활용할 수 있습니다.
@@ -59,9 +59,9 @@ description: API 정보
 | 코드 | HTTP | 설명 |
 |------|------|------|
 | `NO_DATA_FOUND` | 404 | 조건에 맞는 데이터 없음 |
-| `NO_PARAMETER_PROVIDED` | 400 | 파라메터 누락 |
-| `MULTIPLE_PARAMETERS_PROVIDED` | 400 | 파라메터 2개 이상 입력 |
-| `INVALID_PARAMETERS_PROVIDED` | 400 | 파라메터 형식 오류 |
+| `NO_PARAMETER_PROVIDED` | 400 | 파라미터 누락 |
+| `MULTIPLE_PARAMETERS_PROVIDED` | 400 | 파라미터 2개 이상 입력 |
+| `INVALID_PARAMETERS_PROVIDED` | 400 | 파라미터 형식 오류 |
 | `INVALID_NAME_PROVIDED` | 404 | 존재하지 않는 마인크래프트 닉네임 |
 | `RATE_LIMITED` | 429 | 요청 횟수 초과 |
 | `UPSTREAM_ERROR` | 502 / 503 | 외부 API 연결 실패 (지도 서버: 502, Mojang API: 503) |
@@ -79,12 +79,12 @@ description: API 정보
 
 **Query Parameters**
 
-| 파라메터 | 타입 | 설명 |
+| 파라미터 | 타입 | 설명 |
 |----------|------|------|
 | `name` | string | 마을 이름 |
 | `uuid` | string | 마을 UUID |
 
-> 파라메터는 하나만 입력해야 합니다.
+> 파라미터는 하나만 입력해야 합니다.
 
 **Response Fields**
 
@@ -183,12 +183,12 @@ GET https://api.planetearth.kr/town/bulk
 
 **Query Parameters**
 
-| 파라메터 | 타입 | 설명 |
+| 파라미터 | 타입 | 설명 |
 |----------|------|------|
 | `name` | string | 국가 이름 |
 | `uuid` | string | 국가 UUID |
 
-> 파라메터는 하나만 입력해야 합니다.
+> 파라미터는 하나만 입력해야 합니다.
 
 **Response Fields**
 
@@ -226,7 +226,7 @@ GET https://api.planetearth.kr/nation?name=Dev
       "balance": 956188.0,
       "allies": "",
       "enemies": "",
-      "nationBoard": "/nation set board [메세지]",
+      "nationBoard": "/nation set board [메시지]",
       "registered": 1725978155425
     }
   ]
@@ -275,13 +275,13 @@ GET https://api.planetearth.kr/nation/bulk
 
 **Query Parameters**
 
-| 파라메터 | 타입 | 설명 |
+| 파라미터 | 타입 | 설명 |
 |----------|------|------|
 | `name` | string | 마인크래프트 닉네임 |
 | `uuid` | string | 마인크래프트 UUID |
 | `town` | string | 마을 이름 |
 
-> 파라메터는 하나만 입력해야 합니다.
+> 파라미터는 하나만 입력해야 합니다.
 
 **Response Fields**
 
@@ -371,17 +371,17 @@ GET https://api.planetearth.kr/resident/bulk
 #### `GET /discord`
 
 디스코드 ID, UUID, 또는 닉네임으로 마인크래프트 ↔ 디스코드 연동 정보를 조회합니다.  
-`name` 파라메터 사용 시 Mojang API를 통해 UUID로 변환합니다.
+`name` 파라미터 사용 시 Mojang API를 통해 UUID로 변환합니다.
 
 **Query Parameters**
 
-| 파라메터 | 타입 | 설명 |
+| 파라미터 | 타입 | 설명 |
 |----------|------|------|
 | `discord` | string | 디스코드 ID |
 | `uuid` | string | 마인크래프트 UUID |
 | `name` | string | 마인크래프트 닉네임 |
 
-> 파라메터는 하나만 입력해야 합니다.
+> 파라미터는 하나만 입력해야 합니다.
 
 **Response Fields**
 
@@ -420,13 +420,13 @@ GET https://api.planetearth.kr/discord?name=Irochi_
 
 **Query Parameters**
 
-| 파라메터 | 타입 | 설명 |
+| 파라미터 | 타입 | 설명 |
 |----------|------|------|
 | `name` | string | 판매자 닉네임 |
 | `uuid` | string | 판매자 UUID |
 | `id` | string | 아이템 UUID |
 
-> 파라메터는 하나만 입력해야 합니다.
+> 파라미터는 하나만 입력해야 합니다.
 
 **Response Fields**
 
@@ -576,8 +576,11 @@ import requests
 
 TOKEN = ""    # 봇 토큰
 ROLE_ID = ""  # 지급할 역할 ID
+TOWN_NAME = "ExampleTown"  # 확인할 마을 이름
 
-intents = discord.Intents.all()
+intents = discord.Intents.default()
+intents.message_content = True
+intents.members = True
 client = discord.Client(intents=intents)
 
 @client.event
@@ -609,8 +612,8 @@ async def on_message(message):
     resident = res["data"][0]
 
     # 3. 마을 확인 후 역할 지급
-    if resident["town"] != "Dev_Island":
-        await message.channel.send("Dev_Island 마을에 가입되지 않은 플레이어입니다.")
+    if resident["town"] != TOWN_NAME:
+        await message.channel.send(f"{TOWN_NAME} 마을에 가입되지 않은 플레이어입니다.")
         return
 
     guild = message.guild
