@@ -1,13 +1,28 @@
 # PlanetEarth 가이드
+
 환영합니다! PlanetEarth 가이드 저장소입니다.
 
-이 저장소에서 가이드라인을 지켜 수정사항을 요청할 수 있습니다. (방법에 대해서는 추후 작성 예정)
 
-본 저장소는 Node.js 와 pnpm 을 사용합니다. 아래 명령어를 사용해 직접 테스트해볼 수 있습니다.
+## 로컬 실행
 
-```
+Node.js 22+ 와 pnpm 이 필요합니다.
+
+```bash
 pnpm install
 pnpm start
 ```
 
-For the love of, [Docusaurus 3](https://github.com/facebook/docusaurus)
+## 빌드 및 검증
+
+```bash
+pnpm build
+pnpm typecheck 
+```
+
+## 기여하기
+
+가이드 수정·추가 방법은 [가이드 직접 수정하기](/etc/contributing) 문서를 참고해주세요.
+
+
+
+For the love of, [Docusaurus 3](https://docusaurus.io/) 

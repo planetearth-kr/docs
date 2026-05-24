@@ -1,0 +1,8 @@
+{
+  "extends": "@docusaurus/tsconfig",
+  "compilerOptions": {
+    "ignoreDeprecations": "6.0",
+    "types": ["node"]
+  },
+  "exclude": [".docusaurus", "build", "node_modules"]
+}

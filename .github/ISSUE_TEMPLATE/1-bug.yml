@@ -2,12 +2,12 @@ name: 버그 신고
 description: 가이드 내용에 잘못된 점이 있다면 알려주세요!
 labels: [bug]
 body:
-    - type: textarea
+    - type: input
       attributes:
-          label: 본인의 마인크래프트 닉네임을 적어주세요!
-          description: '예시: Irochi_'
+          label: 마인크래프트 닉네임 (선택)
+          description: '게임 내용과 관련된 문의일 경우에만 적어주세요. 예시: Irochi_'
       validations:
-          required: true
+          required: false
     - type: textarea
       attributes:
           label: 어떤 페이지에 문제가 있나요?
