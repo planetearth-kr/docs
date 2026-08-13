@@ -24,10 +24,12 @@
     "react-dom": "^19.2.6"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^5.20260813.1",
     "@docusaurus/module-type-aliases": "3.10.1",
     "@docusaurus/tsconfig": "3.10.1",
     "@docusaurus/types": "3.10.1",
     "@types/node": "^25.9.1",
+    "decap-server": "^3.10.0",
     "sharp": "^0.34.5",
     "tsx": "^4.22.3",
     "typescript": "~6.0.3"
