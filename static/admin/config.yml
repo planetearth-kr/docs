@@ -1,0 +1,143 @@
+backend:
+  name: github
+  repo: planetearth-kr/docs
+  branch: main
+  base_url: https://docs.planetearth.kr
+  auth_endpoint: api/auth
+  publish_mode: editorial_workflow
+
+media_folder: "static/img/uploads"
+public_folder: "/img/uploads"
+
+# 문서 프론트매터 공통 필드. nested collection이 이 저장소 구조(폴더 이름에 공백/& 포함,
+# dungeon.mdx 파일과 dungeon/ 폴더 동시 존재 등)에서 항목 누락·오표시 버그를 보여
+# 카테고리별 개별 folder collection으로 구성함 (로컬 decap-server 검증에서 확인).
+# 필드 순서 = 저장 시 프론트매터에 쓰여지는 키 순서. 이 저장소의 기존 파일들이
+# 전부 slug → sidebar_position → sidebar_label → title → description 순서를 쓰고 있어서
+# (9개 최상위 문서 파일에서 확인), 저장할 때마다 키 순서가 바뀌어 불필요한 diff가 생기는 것을
+# 막기 위해 동일한 순서로 맞춤.
+doc_fields: &doc_fields
+  - { label: "URL Slug", name: "slug", widget: "string", required: false, hint: "예: /rules (라우팅 경로)" }
+  - { label: "사이드바 순서", name: "sidebar_position", widget: "number", required: false, value_type: "int" }
+  - { label: "사이드바 라벨", name: "sidebar_label", widget: "string", required: false }
+  - { label: "제목", name: "title", widget: "string" }
+  - { label: "설명", name: "description", widget: "text", required: false }
+  - { label: "본문", name: "body", widget: "text" }
+
+collections:
+  - name: "top-level"
+    label: "최상위 문서"
+    folder: "src/docs"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "towny"
+    label: "마을 & 국가 시스템"
+    folder: "src/docs/마을 & 국가 시스템"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "lifestyle"
+    label: "생활 컨텐츠"
+    folder: "src/docs/생활 컨텐츠"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "lifestyle-dungeon"
+    label: "생활 컨텐츠 - 던전"
+    folder: "src/docs/생활 컨텐츠/dungeon"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "lifestyle-moon"
+    label: "생활 컨텐츠 - 달 탐사"
+    folder: "src/docs/생활 컨텐츠/달 탐사"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "pvp"
+    label: "전투 컨텐츠"
+    folder: "src/docs/전투 컨텐츠"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "pvp-mechanics"
+    label: "전투 컨텐츠 - 메커니즘"
+    folder: "src/docs/전투 컨텐츠/메커니즘"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "unique"
+    label: "특수 시스템"
+    folder: "src/docs/특수 시스템"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "events"
+    label: "이벤트"
+    folder: "src/docs/이벤트"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "events-build"
+    label: "이벤트 - 건축콘테스트"
+    folder: "src/docs/이벤트/건축콘테스트"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "events-art"
+    label: "이벤트 - 아트콘테스트"
+    folder: "src/docs/이벤트/아트콘테스트"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "events-special"
+    label: "이벤트 - 특별이벤트"
+    folder: "src/docs/이벤트/특별이벤트"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields
+
+  - name: "etc"
+    label: "기타"
+    folder: "src/docs/기타"
+    extension: "mdx"
+    format: "frontmatter"
+    create: true
+    delete: true
+    fields: *doc_fields

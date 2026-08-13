@@ -2,3 +2,5 @@ allowBuilds:
   core-js: true
   esbuild: true
   sharp: true
+minimumReleaseAgeExclude:
+  - '@cloudflare/workers-types@5.20260813.1'
