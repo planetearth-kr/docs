@@ -4,7 +4,9 @@ backend:
   branch: main
   base_url: https://docs.planetearth.kr
   auth_endpoint: api/auth
-  publish_mode: editorial_workflow
+
+# top-level 키여야 함 (backend: 안에 넣으면 조용히 무시되고 simple 모드로 동작함 - 직접 겪은 버그)
+publish_mode: editorial_workflow
 
 media_folder: "static/img/uploads"
 public_folder: "/img/uploads"
