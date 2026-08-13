@@ -24,7 +24,10 @@ doc_fields: &doc_fields
   - { label: "사이드바 라벨", name: "sidebar_label", widget: "string", required: false }
   - { label: "제목", name: "title", widget: "string" }
   - { label: "설명", name: "description", widget: "text", required: false }
-  - { label: "본문", name: "body", widget: "text" }
+  # 리치 마크다운 위젯. admin.js의 커스텀 에디터 컴포넌트(admonition)가 :::type ... ::: 구문을
+  # 안전하게 왕복 직렬화함. Notion에서 넘어오며 콘텐츠를 전면 재작성하기로 해서 채택 (기존
+  # 콘텐츠 diff 노이즈보다 편집 편의성 우선).
+  - { label: "본문", name: "body", widget: "markdown" }
 
 collections:
   - name: "top-level"
