@@ -1,5 +1,6 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
+import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'PlanetEarth',
@@ -8,6 +9,11 @@ const config: Config = {
   baseUrl: '/',
   onBrokenLinks: 'throw',
   favicon: 'img/favicon.ico',
+
+  future: {
+    v4: true,
+  },
+
   trailingSlash: false,
   organizationName: 'planetearth-kr',
   projectName: 'docs',
@@ -28,7 +34,7 @@ const config: Config = {
       '@docusaurus/preset-classic',
       {
         docs: {
-          sidebarPath: require.resolve('./sidebars.ts'),
+          sidebarPath: './sidebars.ts',
           path: 'src/docs',
           routeBasePath: '/',
           editUrl: 'https://github.com/planetearth-kr/docs/tree/main/',
@@ -42,9 +48,9 @@ const config: Config = {
           filename: 'sitemap.xml',
         },
         theme: {
-          customCss: require.resolve('./src/css/custom.css'),
+          customCss: './src/css/custom.css',
         },
-      },
+      } satisfies Preset.Options,
     ],
   ],
 
@@ -92,7 +98,7 @@ const config: Config = {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-  },
+  } satisfies Preset.ThemeConfig,
 };
 
 export default config;
