@@ -1,43 +1,7 @@
-# Eclipse stuff
-.classpath
-.project
-.settings/
-
-# VSCode stuff
+# Editors
 .vscode/
-
-# netbeans
-nbproject/
-nbactions.xml
-
-# vim
-.*.sw[a-p]
-
-# various other potential build files
-bin/
-dist/
-manifest.mf
-
-# Mac filesystem dust
-.DS_Store/
-.DS_Store
-
-# intellij
-*.iml
-*.ipr
-*.iws
 .idea/
-out/
-
-# JetBrains Fleet
-.fleet/
-
-# Linux temp files
-*~
-
-# other stuff
-run/
-logs/
+.DS_Store
 
 # Dependencies
 /node_modules
@@ -54,6 +18,3 @@ pnpm-lock.yaml
 # Misc
 npm-debug.log*
 .pnp.*
-/.meta
-/공식가이드_노션
-/scripts
