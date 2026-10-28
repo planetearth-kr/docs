@@ -1,6 +1,7 @@
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import notionSync from './notion-sync.json';
 
 const config: Config = {
   title: 'PlanetEarth',
@@ -37,7 +38,6 @@ const config: Config = {
           sidebarPath: './sidebars.ts',
           path: 'src/docs',
           routeBasePath: '/',
-          editUrl: 'https://github.com/planetearth-kr/docs/tree/main/',
         },
         blog: false,
         sitemap: {
@@ -51,6 +51,16 @@ const config: Config = {
           customCss: './src/css/custom.css',
         },
       } satisfies Preset.Options,
+    ],
+  ],
+
+  plugins: [
+    [
+      '@docusaurus/plugin-client-redirects',
+      {
+        // 목록은 notion-sync.json에서 관리한다.
+        redirects: Object.entries(notionSync.redirects).map(([from, to]) => ({from, to})),
+      },
     ],
   ],
 

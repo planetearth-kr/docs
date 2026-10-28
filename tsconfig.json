@@ -4,5 +4,5 @@
     "ignoreDeprecations": "6.0",
     "types": ["node"]
   },
-  "exclude": [".docusaurus", "build", "node_modules", "functions"]
+  "exclude": [".docusaurus", "build", "node_modules"]
 }

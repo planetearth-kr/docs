@@ -1,0 +1,87 @@
+name: Notion sync
+
+on:
+  schedule:
+    - cron: '0 19 * * *' # 매일 KST 04:00
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency:
+  group: notion-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 이전 동기화 PR이 아직 열려 있으면 같은 변경을 다시 처리하지 않도록 건너뛴다.
+      - name: Skip if sync PR is open
+        id: open
+        run: echo "count=$(gh pr list --head notion-sync --state open --json number --jq length)" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - if: steps.open.outputs.count == '0'
+        uses: pnpm/action-setup@v4
+
+      - if: steps.open.outputs.count == '0'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # pnpm-lock.yaml은 .gitignore 대상이라 lockfile 없이 설치한다.
+      - if: steps.open.outputs.count == '0'
+        run: pnpm install --no-frozen-lockfile
+
+      - if: steps.open.outputs.count == '0'
+        run: node --test scripts/notion-sync/
+
+      - name: Snapshot Notion
+        id: snapshot
+        if: steps.open.outputs.count == '0'
+        run: |
+          node scripts/notion-sync/index.mjs > "$RUNNER_TEMP/report.md"
+          git add -N notion-snapshot static/img/notion
+          if git diff --quiet -- notion-snapshot; then echo "changed=false" >> "$GITHUB_OUTPUT"; else echo "changed=true" >> "$GITHUB_OUTPUT"; fi
+        env:
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+
+      - name: Apply changes to docs
+        if: steps.snapshot.outputs.changed == 'true'
+        run: |
+          npx -y @anthropic-ai/claude-code -p "$(cat scripts/notion-sync/agent-prompt.md)" \
+            --model sonnet \
+            --max-turns 80 \
+            --permission-mode acceptEdits \
+            --allowedTools "Read,Edit,Write,Glob,Grep,Bash(git diff:*),Bash(git status:*),Bash(git rm:*),Bash(mkdir:*),Bash(mv:*),Bash(pnpm build)" \
+            > "$RUNNER_TEMP/agent.md"
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      # 에이전트 결과가 빌드를 깨면 PR을 만들지 않는다.
+      - if: steps.snapshot.outputs.changed == 'true'
+        run: pnpm build
+
+      - if: steps.snapshot.outputs.changed == 'true'
+        run: |
+          { cat "$RUNNER_TEMP/agent.md"; echo; echo '---'; echo '#### 노션 스냅샷 변경'; cat "$RUNNER_TEMP/report.md"; } > "$RUNNER_TEMP/body.md"
+
+      - if: steps.snapshot.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: notion-sync
+          delete-branch: true
+          title: 노션 동기화
+          commit-message: Sync from Notion
+          body-path: ${{ runner.temp }}/body.md
+          add-paths: |
+            notion-snapshot
+            notion-sync.json
+            src/docs
+            static/img/notion
+            static/img/docs

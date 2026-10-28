@@ -1,0 +1,80 @@
+---
+slug: /lifestyle/instruments
+sidebar_position: 8
+sidebar_label: 악기
+title: 악기
+description: 악기 연주 방법과 전공, 전용 모드를 설명합니다.
+---
+
+![instruments](/img/docs/life/instruments/instruments-01.webp)
+
+플래닛어스에는 모두 14종의 악기가 있습니다. 악기는 서버 상점에서 1만골드에 살 수 있으며, 내구도는 따로 없습니다.
+
+악기를 연주하려면 악기 상점에서 500포인트짜리 이용권을 구매해야 합니다.
+
+## 연주
+
+악기를 손에 들고 `/instruments` 또는 `/악기` 명령어를 사용하면 악기 연주 UI가 열립니다.
+
+![instrument-play-ui](/img/docs/life/instruments/instrument-play-ui-01.webp)
+
+- **음 재생**: 원하는 음을 클릭하세요. 아래의 전용 공식 모드를 설치했다면 모드에 안내된 방법대로 연주할 수 있습니다.
+- **볼륨 조정**: 인벤토리 바깥을 마우스로 클릭하세요. 전용 공식 모드를 설치했다면 모드에 안내된 방법대로 볼륨을 조정할 수 있습니다.
+
+:::info
+볼륨은 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0, 1.25, 1.5의 총 10단계입니다. 빨간색 영역은 소리 크기는 그대로이고 들리는 거리만 멀어집니다.
+:::
+
+### 제한
+
+아래 조건 중 하나라도 해당하면 악기를 연주할 수 없습니다.
+
+- 서버 인원이 350명 이상일 때
+- 전쟁 중일 때
+- 스폰의 소극장(x 63, z 40 부근)과 지구 월드를 제외한 모든 지역
+- 지구 월드에서 적대국의 영토 안
+
+## 전공
+
+악기를 가지고 있다고 바로 연주할 수 있는 것은 아닙니다.
+
+![instrument-major-menu](/img/docs/life/instruments/instrument-major-menu-01.webp)
+
+악기 전공 관리 메뉴에서 전공을 최대 네 개까지 선택할 수 있습니다. 한 번 선택한 전공은 악기 상점에서 5000골드나 300포인트를 내고 초기화하기 전까지 바꿀 수 없습니다.
+
+동시에 활성화할 수 있는 전공 수는 랭크에 따라 다릅니다.
+
+- Pro 랭크: 최대 3개
+- 엑스퍼트 랭크: 최대 4개
+- 나머지 랭크: 최대 2개
+
+예를 들어 전공을 4개까지 배웠더라도 활성 전공 슬롯이 2개라면 3번, 4번 전공의 악기는 쓸 수 없습니다.
+
+![active-major-slots](/img/docs/life/instruments/active-major-slots-01.webp)
+
+## 전용 모드
+
+플래닛어스 악기 연주 전용 모드는 디스코드 자료실에서 내려받을 수 있습니다.
+
+### 기본 설정
+
+모드의 기본 키 배열은 아래와 같습니다. 역슬래시(`\`) 키를 눌러 설정을 자유롭게 바꿀 수 있습니다.
+
+![mod-default-key-layout](/img/docs/life/instruments/mod-default-key-layout-01.webp)
+
+![mod-default-key-layout](/img/docs/life/instruments/mod-default-key-layout-02.webp)
+
+### 공유
+
+고급 설정에서 매핑 슬롯 버튼을 누르면 자신의 설정을 다른 사람과 공유할 수 있습니다. 연주할 곡의 조성에 맞춰 키보드 설정을 미리 준비해 둘 수도 있습니다.
+
+- 설정 내보내기: 이름 입력 → 저장 → 내보내기 → 슬롯 폴더 열기 → 저장된 파일을 다른 사람에게 공유
+- 설정 가져오기: 슬롯 폴더 열기 → 폴더에 설정 파일 넣기 → 게임 안에서 해당 파일 가져오기 클릭
+
+![mod-mapping-slots](/img/docs/life/instruments/mod-mapping-slots-01.webp)
+
+### MIDI
+
+MIDI 장치를 연결하면 키보드 대신 실제 건반 등으로도 연주할 수 있습니다.
+
+악기 콘텐츠는 FT\_IGLOO, MF\_MNT 두 플레이어와 협업해 만들었습니다.
