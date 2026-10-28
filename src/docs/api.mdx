@@ -18,7 +18,12 @@ description: API 정보
 | Base URL | `https://api.planetearth.kr` |
 | 응답 형식 | JSON |
 | 인증 | 없음 (공개 API) |
-| 캐시 TTL | 5분 (일반) / 1시간 (Mojang 닉네임·UUID 변환) |
+| 단건 조회 캐시 | 5분 (결과가 없으면 1분) |
+| 목록·Bulk 데이터 | 5분마다 갱신 (최대 약 7분 지연) |
+| 온라인 정보 | 최대 5분 지연 |
+
+- 모든 응답에 `ETag` 헤더가 붙습니다. 다음 요청에 `If-None-Match` 헤더로 보내면 데이터가 바뀌지 않았을 때 본문 없이 `304`를 받습니다.
+- 마을·국가 이름에 특수문자(`Edo[江戸]`, `Washington_D.C.` 등)가 있으면 URL 인코딩해서 보내주세요.
 
 ---
 
@@ -26,8 +31,15 @@ description: API 정보
 
 | 종류 | 제한 |
 |------|------|
-| 일반 엔드포인트 | IP당 **15분에 70회** |
-| Bulk 엔드포인트 | IP당 **15분에 5회** |
+| 일반 엔드포인트 | IP당 **1분에 약 30회** |
+| Bulk 엔드포인트 | IP당 **엔드포인트별로 1분에 약 2회** |
+| `/health` | IP당 **1분에 약 60회** |
+
+제한을 넘으면 `429`와 `Retry-After` 헤더(초 단위)를 받습니다. 그 시간만큼 기다린 뒤 다시 요청해주세요.
+
+:::tip
+여러 마을·국가·주민 정보를 한꺼번에 가져와야 한다면 단건 조회를 반복하지 말고 Bulk 엔드포인트를 사용해주세요.
+:::
 
 ---
 
@@ -59,12 +71,13 @@ description: API 정보
 | 코드 | HTTP | 설명 |
 |------|------|------|
 | `NO_DATA_FOUND` | 404 | 조건에 맞는 데이터 없음 |
+| `NOT_FOUND` | 404 | 존재하지 않는 엔드포인트 |
 | `NO_PARAMETER_PROVIDED` | 400 | 파라미터 누락 |
 | `MULTIPLE_PARAMETERS_PROVIDED` | 400 | 파라미터 2개 이상 입력 |
 | `INVALID_PARAMETERS_PROVIDED` | 400 | 파라미터 형식 오류 |
-| `INVALID_NAME_PROVIDED` | 404 | 존재하지 않는 마인크래프트 닉네임 |
+| `INVALID_NAME_PROVIDED` | 404 | 플래닛어스에 접속한 적 없는 닉네임 (`/discord?name=`) |
 | `RATE_LIMITED` | 429 | 요청 횟수 초과 |
-| `UPSTREAM_ERROR` | 502 / 503 | 외부 API 연결 실패 (지도 서버: 502, Mojang API: 503) |
+| `UPSTREAM_ERROR` | 502 | 지도 서버 연결 실패 (`/online`) |
 | `SERVER_ERROR` | 500 | 서버 내부 오류 |
 
 ---
@@ -94,7 +107,7 @@ description: API 정보
 | `uuid` | string | 마을 UUID |
 | `mayor` | string | 마을장 닉네임 |
 | `nation` | string | 소속 국가 이름 |
-| `residents` | string | 주민 목록 (`, ` 구분) |
+| `residents` | string | 주민 목록 (`, ` 구분, 이름순) |
 | `memberCount` | number | 전체 주민 수 |
 | `onlineMemberCount` | number | 현재 온라인 주민 수 |
 | `onlineMembers` | string | 현재 온라인 주민 목록 (`, ` 구분) |
@@ -108,6 +121,8 @@ description: API 정보
 | `joinedNationAt` | number | 국가 가입일 (Unix ms) |
 | `spawn` | string | 마을 스폰 좌표 |
 
+> 지도 서버에 연결할 수 없으면 `onlineMemberCount`는 `0`, `onlineMembers`는 빈 문자열입니다.
+
 **Example Request**
 ```
 GET https://api.planetearth.kr/town?name=Dev_Island
@@ -120,22 +135,22 @@ GET https://api.planetearth.kr/town?name=Dev_Island
   "data": [
     {
       "name": "Dev_Island",
-      "uuid": "36315f61-0685-4668-865c-87e0ca85cfda",
-      "mayor": "aceda8",
+      "memberCount": 12,
+      "mayor": "Heiz",
       "nation": "Dev",
-      "residents": "aceda8, ashpoints, Heiz, Irochi_, I_loveryo, LonelyUniverse_, MA5O, Maltes_, Royang_, Squirrel, TownyAPI, Virtual_Tabi, Yellim",
-      "memberCount": 13,
-      "onlineMemberCount": 1,
-      "onlineMembers": "Heiz",
-      "claimSize": 82,
-      "balance": 512031.0,
+      "residents": "aceda8, ashpoints, Heiz, Irochi_, LonelyUniverse_, MA5O, Maltes_, Oneper34_, Royang_, Squirrel, TownyAPI, Yellim",
       "townBoard": "d",
       "trustedResidents": "",
       "outlaws": "",
-      "founder": "Irochi_",
       "registered": 1663982084499,
+      "spawn": "world, -1682.9804406008402, 130.0, 5095.724900104271, 37.90424, 5.7425537",
+      "founder": "Irochi_",
       "joinedNationAt": 1725978155425,
-      "spawn": "world, -1682.9804406008402, 130.0, 5095.724900104271, 37.90424, 5.7425537"
+      "claimSize": 87,
+      "uuid": "36315f61-0685-4668-865c-87e0ca85cfda",
+      "balance": 2765151.8963009114,
+      "onlineMemberCount": 1,
+      "onlineMembers": "Heiz"
     }
   ]
 }
@@ -145,7 +160,7 @@ GET https://api.planetearth.kr/town?name=Dev_Island
 
 #### `GET /town/list`
 
-모든 마을의 이름과 UUID 목록을 반환합니다.
+모든 마을의 이름과 UUID 목록을 반환합니다. 5분마다 갱신됩니다.
 
 **Response Fields**
 
@@ -163,10 +178,10 @@ GET https://api.planetearth.kr/town/list
 
 #### `GET /town/bulk`
 
-모든 마을의 전체 정보를 반환합니다.  
+모든 마을의 전체 정보를 반환합니다. 5분마다 갱신됩니다.  
 `onlineMemberCount`, `onlineMembers` 필드는 포함되지 않습니다.
 
-> **Bulk Endpoint** — 15분당 5회 제한
+> **Bulk Endpoint** — 1분당 2회 제한
 
 **Example Request**
 ```
@@ -198,7 +213,7 @@ GET https://api.planetearth.kr/town/bulk
 | `uuid` | string | 국가 UUID |
 | `capital` | string | 수도 마을 이름 |
 | `leader` | string | 국왕 닉네임 |
-| `towns` | string | 소속 마을 목록 (`, ` 구분) |
+| `towns` | string | 소속 마을 목록 (`, ` 구분, 이름순) |
 | `memberCount` | number | 전체 주민 수 |
 | `balance` | number | 국가 잔고 |
 | `allies` | string | 동맹 국가 목록 |
@@ -218,16 +233,16 @@ GET https://api.planetearth.kr/nation?name=Dev
   "data": [
     {
       "name": "Dev",
-      "uuid": "6bcf7309-d828-4a83-88fb-02a63d69d821",
+      "memberCount": 12,
       "capital": "Dev_Island",
-      "leader": "aceda8",
+      "leader": "Heiz",
       "towns": "Dev_Island",
-      "memberCount": 13,
-      "balance": 956188.0,
       "allies": "",
       "enemies": "",
-      "nationBoard": "/nation set board [메시지]",
-      "registered": 1725978155425
+      "registered": 1725978155425,
+      "nationBoard": "/nation set board [메세지]",
+      "uuid": "6bcf7309-d828-4a83-88fb-02a63d69d821",
+      "balance": 692152.1582582794
     }
   ]
 }
@@ -237,7 +252,7 @@ GET https://api.planetearth.kr/nation?name=Dev
 
 #### `GET /nation/list`
 
-모든 국가의 이름과 UUID 목록을 반환합니다.
+모든 국가의 이름과 UUID 목록을 반환합니다. 5분마다 갱신됩니다.
 
 **Response Fields**
 
@@ -255,9 +270,9 @@ GET https://api.planetearth.kr/nation/list
 
 #### `GET /nation/bulk`
 
-모든 국가의 전체 정보를 반환합니다.
+모든 국가의 전체 정보를 반환합니다. 5분마다 갱신됩니다.
 
-> **Bulk Endpoint** — 15분당 5회 제한
+> **Bulk Endpoint** — 1분당 2회 제한
 
 **Example Request**
 ```
@@ -300,7 +315,7 @@ GET https://api.planetearth.kr/nation/bulk
 | `registered` | number | 첫 접속일 (Unix ms) |
 | `lastOnline` | number | 마지막 접속일 (Unix ms) |
 | `joinedTownAt` | number | 마을 가입일 (Unix ms) |
-| `online` | boolean | 현재 온라인 여부 |
+| `online` | boolean | 현재 온라인 여부 (지도 서버에 연결할 수 없으면 `false`) |
 
 **Example Request**
 ```
@@ -314,18 +329,18 @@ GET https://api.planetearth.kr/resident?name=Irochi_
   "data": [
     {
       "name": "Irochi_",
-      "uuid": "626dfe3b-7820-48c7-9974-1e332b4ffe60",
       "town": "Dev_Island",
       "nation": "Dev",
       "townRanks": "",
-      "nationRanks": "군인, PVP",
+      "nationRanks": "PVP, 군인",
+      "lastOnline": 1777807004043,
+      "registered": 1663865955658,
       "title": "",
       "surname": "",
-      "balance": 5448.0,
-      "friends": "",
-      "registered": 1663865955658,
-      "lastOnline": 1777807004043,
       "joinedTownAt": 1766499540032,
+      "friends": "",
+      "uuid": "626dfe3b-7820-48c7-9974-1e332b4ffe60",
+      "balance": 8624.153830221288,
       "online": false
     }
   ]
@@ -336,7 +351,7 @@ GET https://api.planetearth.kr/resident?name=Irochi_
 
 #### `GET /resident/list`
 
-모든 주민의 이름과 UUID 목록을 반환합니다.
+모든 주민의 이름과 UUID 목록을 반환합니다. 5분마다 갱신됩니다.
 
 **Response Fields**
 
@@ -354,10 +369,10 @@ GET https://api.planetearth.kr/resident/list
 
 #### `GET /resident/bulk`
 
-모든 주민의 전체 정보를 반환합니다.  
+모든 주민의 전체 정보를 반환합니다. 5분마다 갱신됩니다.  
 `online` 필드는 포함되지 않습니다.
 
-> **Bulk Endpoint** — 15분당 5회 제한
+> **Bulk Endpoint** — 1분당 2회 제한
 
 **Example Request**
 ```
@@ -371,7 +386,7 @@ GET https://api.planetearth.kr/resident/bulk
 #### `GET /discord`
 
 디스코드 ID, UUID, 또는 닉네임으로 마인크래프트 ↔ 디스코드 연동 정보를 조회합니다.  
-`name` 파라미터 사용 시 Mojang API를 통해 UUID로 변환합니다.
+`name`으로 조회하면 플래닛어스 주민 데이터에서 UUID를 찾습니다. 서버에 접속한 적 없는 닉네임은 `INVALID_NAME_PROVIDED`(404)를 반환합니다.
 
 **Query Parameters**
 
@@ -389,7 +404,7 @@ GET https://api.planetearth.kr/resident/bulk
 |------|------|------|
 | `discord` | string | 디스코드 ID |
 | `uuid` | string | 마인크래프트 UUID |
-| `name` | string | 마인크래프트 닉네임 |
+| `name` | string \| null | 마인크래프트 닉네임 (주민 데이터가 없으면 `null`) |
 
 **Example Request**
 ```
@@ -416,7 +431,8 @@ GET https://api.planetearth.kr/discord?name=Irochi_
 
 #### `GET /auction`
 
-닉네임, UUID, 또는 경매 ID로 현재 등록된 유저 거래소 아이템을 조회합니다.
+닉네임, UUID, 또는 경매 ID로 현재 등록된 유저 거래소 아이템을 조회합니다.  
+만료된 아이템은 포함되지 않습니다.
 
 **Query Parameters**
 
@@ -436,12 +452,14 @@ GET https://api.planetearth.kr/discord?name=Irochi_
 | `seller` | string | 판매자 UUID |
 | `sellerName` | string | 판매자 닉네임 |
 | `price` | number | 판매가 |
-| `expire_at` | string | 경매 만료 일시 |
+| `expire_at` | number | 경매 만료 일시 (Unix ms) |
 | `itemInfo.type` | string | 아이템 종류 (예: `minecraft:diamond_sword`) |
 | `itemInfo.amount` | number | 수량 |
 | `itemInfo.displayName` | string \| null | 이름 (없을 경우 `null`) |
 | `itemInfo.lore` | string[] | 설명 줄 목록 |
-| `itemInfo.enchants` | object[] | 인첸트 목록 (`{ id, level }`) |
+| `itemInfo.enchants` | object[] | 인챈트 목록 (`{ id, level }`, 인챈트 책은 저장된 인챈트) |
+
+> 아이템 정보를 읽을 수 없으면 `itemInfo`는 `null`입니다.
 
 **Example Request**
 ```
@@ -458,7 +476,7 @@ GET https://api.planetearth.kr/auction?name=Steve
       "seller": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
       "sellerName": "Steve",
       "price": 5000,
-      "expire_at": "2024-12-31T23:59:59.000Z",
+      "expire_at": 1793161890662,
       "itemInfo": {
         "type": "minecraft:diamond_sword",
         "amount": 1,
@@ -478,9 +496,9 @@ GET https://api.planetearth.kr/auction?name=Steve
 
 #### `GET /auction/list`
 
-현재 거래소에 있는 모든 아이템을 반환합니다. 만료 일시 기준 오름차순 정렬.
+현재 거래소에 있는 모든 아이템을 반환합니다. 만료 일시 기준 오름차순 정렬이며, 5분마다 갱신됩니다.
 
-> **Bulk Endpoint** — 15분당 5회 제한
+> **Bulk Endpoint** — 1분당 2회 제한
 
 **Example Request**
 ```
@@ -491,17 +509,17 @@ GET https://api.planetearth.kr/auction/list
 
 #### `GET /auction/transactions/list`
 
-최근 거래소 거래 내역 100건을 최신 순으로 반환합니다.
+최근 거래소 거래 내역 100건을 최신 순으로 반환합니다. 5분마다 갱신됩니다.
 
-> **Bulk Endpoint** — 15분당 5회 제한
+> **Bulk Endpoint** — 1분당 2회 제한
 
 **Response Fields**
 
 | 필드 | 타입 | 설명 |
 |------|------|------|
-| `id` | string | 거래 ID |
+| `id` | number | 거래 ID |
 | `price` | number | 거래 금액 |
-| `transaction_date` | string | 거래 일시 |
+| `transaction_date` | number | 거래 일시 (Unix ms) |
 | `itemInfo` | object | 아이템 정보 (`/auction`과 동일 구조) |
 
 **Example Request**
@@ -515,16 +533,18 @@ GET https://api.planetearth.kr/auction/transactions/list
   "status": "SUCCESS",
   "data": [
     {
-      "id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
-      "price": 5000,
-      "transaction_date": "2024-12-31T23:59:59.000Z",
+      "id": 206506,
+      "transaction_date": 1793155266192,
+      "price": 1056,
       "itemInfo": {
-        "type": "minecraft:diamond_sword",
+        "type": "minecraft:diamond_pickaxe",
         "amount": 1,
-        "displayName": "전설의 검",
-        "lore": ["강력한 힘이 깃든 검"],
+        "displayName": null,
+        "lore": ["모루 사용 가능 횟수: 6"],
         "enchants": [
-          { "id": "minecraft:sharpness", "level": 5 }
+          { "id": "minecraft:efficiency", "level": 4 },
+          { "id": "minecraft:silk_touch", "level": 1 },
+          { "id": "minecraft:unbreaking", "level": 3 }
         ]
       }
     }
@@ -538,7 +558,8 @@ GET https://api.planetearth.kr/auction/transactions/list
 
 #### `GET /online`
 
-현재 서버에 접속 중인 플레이어 목록을 반환합니다.
+현재 서버에 접속 중인 플레이어 목록을 반환합니다. 최대 5분 지연될 수 있습니다.  
+지도 서버에 연결할 수 없으면 `UPSTREAM_ERROR`(502)를 반환합니다.
 
 **Example Request**
 ```
@@ -559,6 +580,41 @@ GET https://api.planetearth.kr/online
       "..."
     ]
   }
+}
+```
+
+---
+
+### 상태 확인
+
+#### `GET /health`
+
+API 상태를 확인합니다. 정상이면 `200`, 데이터베이스 연결이나 데이터 갱신에 문제가 있으면 `503`을 반환합니다.  
+다른 엔드포인트와 달리 `status`/`data` 형식을 따르지 않습니다.
+
+**Response Fields**
+
+| 필드 | 타입 | 설명 |
+|------|------|------|
+| `status` | string | `ok` 또는 `unhealthy` |
+| `colo` | string | 요청을 처리한 Cloudflare 데이터센터 |
+| `version` | string | 배포 버전 |
+| `dbMs` | number \| null | 데이터베이스 응답 시간 (ms, 실패 시 `null`) |
+| `snapshotAge` | number \| null | 목록·Bulk 데이터가 갱신된 지 지난 시간 (초) |
+
+**Example Request**
+```
+GET https://api.planetearth.kr/health
+```
+
+**Example Response**
+```json
+{
+  "status": "ok",
+  "colo": "SEA",
+  "version": "6a5df5b8",
+  "dbMs": 189,
+  "snapshotAge": 66
 }
 ```
 
