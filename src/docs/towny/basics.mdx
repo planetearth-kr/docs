@@ -32,75 +32,7 @@ description: 마을 설립과 기본적인 타우니 사용법을 설명합니�
 
 `/t claim`으로 서 있는 야생 땅을 마을 땅으로 확장합니다. 마을 땅은 외부인으로부터 보호됩니다.
 
-## 마을 가입 후
-
 `/t spawn`으로 마을 스폰으로 이동하세요. 마을이 국가에 속해 있다면 `/n spawn`으로 국가 수도로 이동할 수 있습니다.
-
-## 마을 랭크
-
-마을에는 시장 말고도 부시장, 부관, 사무관, 트러스트 등의 랭크가 있습니다.
-
-- `/t rank add/remove [플레이어] 부시장`: 부시장 권한을 부여합니다. 부시장은 마을 삭제/합병을 제외하고 시장과 같은 권한을 가집니다.
-- `/t rank add/remove [플레이어] 부관`: 부관은 부시장보다 권한이 낮습니다. 플레이어 초대, 마을 땅 확장 등 제한적인 권한을 가집니다.
-- `/t rank add/remove [플레이어] 사무관`: 사무관은 마을의 사무적인 일을 처리하는 직위입니다. 인원 초대, 자원 수집, 마을 스폰 설정, 마을 클레임을 할 수 있습니다. 부시장과 달리 추방, 언클레임, 시즈 관련 행동은 할 수 없습니다.
-- `/t trust add/remove [외부인 이름]`: 마을 외부인에게 마을의 TRUST 권한을 부여합니다. TRUST 권한이 있는 플레이어는 마을에서 블록 설치/파괴, 상자 열기 등을 할 수 있습니다.
-
-### 마을 권한 목록
-
-<table>
-<colgroup><col style={{width:'32%'}}/><col/><col/><col/><col/><col/></colgroup>
-<thead><tr><th>명령어</th><th>시장</th><th>부시장</th><th>부관</th><th>사무관</th><th>마을원</th></tr></thead>
-<tbody>
-<tr><td><code>town add</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>town bankhistory</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town claim</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
-<tr><td><code>town delete</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
-<tr><td><code>town deposit</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>town kick</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town mayor</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
-<tr><td><code>town merge</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
-<tr><td><code>town online</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>town outlaw</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
-<tr><td><code>town plotgrouplist</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town rank add/remove</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town ranklist</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>town reslist</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>town resources collect</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
-<tr><td><code>town resources survey</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set board</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set embassyprice</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set embassytax</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set homeblock</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set mapcolor</code></td><td></td><td></td><td></td><td></td><td></td></tr>
-<tr><td><code>town set name</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set perm</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set plotprice</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set plottax</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set spawn</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td></td></tr>
-<tr><td><code>town set spawncost</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set surname</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set taxes</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set taxpercentcap</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town set title</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town spawn</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>town toggle</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town trust</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town trusttown</code></td><td>O</td><td>O</td><td></td><td></td><td></td></tr>
-<tr><td><code>town unclaim</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>town withdraw</code></td><td>O</td><td></td><td></td><td></td><td></td></tr>
-<tr><td><code>plot claim</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>plot perm</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>plot forsale</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot notforsale</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot group</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot info</code></td><td>O</td><td>O</td><td>O</td><td>O</td><td>O</td></tr>
-<tr><td><code>plot set</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot toggle</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot trust</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot clear</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-<tr><td><code>plot district</code></td><td>O</td><td>O</td><td>O</td><td></td><td></td></tr>
-</tbody>
-</table>
 
 ## 마을 권한
 
@@ -126,9 +58,11 @@ description: 마을 설립과 기본적인 타우니 사용법을 설명합니�
 
 예시: Build, Destroy, Switch, Itemuse 권한이 모두 **R**esidence(마을원)에게 열려 있습니다.
 
+자세한 내용은 [타우니 플롯 권한 가이드](/towny/plot-permissions)를 참고하세요.
+
 ## 트러스트(Trust)
 
-트러스트는 일반적인 마을 권한보다 높은 권한입니다. 트러스트를 받은 플레이어는 마을 땅의 모든 블록과 상자에 대한 권한을 가집니다. 이 권한은 개인 플롯과 마을의 기본 권한보다 우선합니다.
+트러스트는 일반적인 마을 권한보다 높은 권한입니다. 트러스트를 받은 플레이어는 마을 땅의 모든 블록과 상자에 대한 권한을 가집니다. 이 권한은 마을의 기본 권한보다 우선합니다.
 
 - `/t trust add`: 플레이어를 트러스트에 추가합니다.
 - `/t trust remove`: 플레이어를 트러스트에서 제거합니다.
@@ -159,16 +93,6 @@ description: 마을 설립과 기본적인 타우니 사용법을 설명합니�
 - `/n rank add/remove [플레이어] 부왕`: 플레이어를 부왕으로 임명합니다. 부왕은 국가 삭제 및 합병, 전쟁 선포를 제외한 모든 국왕 권한을 가집니다.
 
 국가에 새 마을을 초대하려면 해당 마을이 기존 국가 소속 마을과 **25청크 이내**에 있어야 합니다. 비교 대상인 기존 마을도 국가 소속의 나머지 마을과 25청크 이내에 있어야 합니다.
-
-## 국가 랭크
-
-국가에는 국왕 말고도 부왕, 부관, 외교관, 지휘관 랭크가 있습니다.
-
-- `/n rank add/remove [플레이어] 부왕`: 부왕 권한을 부여합니다. 부왕은 수도 변경, 국가 삭제를 제외한 모든 권한을 가집니다.
-- `/n rank add/remove [플레이어] 부관`: 부관 역할을 부여합니다. 부관은 국가 초대, 동맹 설정, 적대 설정, 스폰 설정을 할 수 있습니다.
-- `/n rank add/remove [플레이어] 외교관`: 외교관 역할을 부여합니다. 외교관은 국가의 동맹, 적대 설정만 할 수 있습니다.
-- `/n rank add/remove [플레이어] 지휘관`: 지휘관 역할을 부여합니다. 지휘관은 집결 명령어와 스폰 설정만 할 수 있습니다.
-- `/n rank add/remove [플레이어] 인사부`: 인사부 역할을 부여합니다. 이 역할을 가진 시장/부시장은 이 랭크가 없는 시장/부시장보다 뉴비 가입 알림을 먼저 받습니다. 국가 소속 마을 중 집중적으로 키우고 싶은 마을의 시장에게 부여하는 것을 추천합니다.
 
 ## 유지비
 
