@@ -39,7 +39,7 @@ jobs:
         run: pnpm install --no-frozen-lockfile
 
       - if: steps.open.outputs.count == '0'
-        run: node --test scripts/notion-sync/
+        run: node --test 'scripts/notion-sync/*.test.mjs'
 
       - name: Snapshot Notion
         id: snapshot
